@@ -1,4 +1,8 @@
 <p align="center">
+  <a href="README.md">🇺🇸 English</a> &nbsp;|&nbsp; <a href="README_zh.md">🇨🇳 中文</a>
+</p>
+
+<p align="center">
   <img src="assets/banner_en.png" alt="Writer Style Skill Factory" width="100%"/>
 </p>
 
@@ -23,8 +27,7 @@
   <a href="#-architecture">Architecture</a> ·
   <a href="#-included-authors">Authors</a> ·
   <a href="#-usage-examples">Usage</a> ·
-  <a href="#-create-your-own">Create New Author</a> ·
-  <a href="README_zh.md">中文文档</a>
+  <a href="#-create-your-own">Create New Author</a>
 </p>
 
 ---

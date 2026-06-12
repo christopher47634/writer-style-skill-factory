@@ -1,4 +1,8 @@
 <p align="center">
+  <a href="README.md">🇺🇸 English</a> &nbsp;|&nbsp; <a href="README_zh.md">🇨🇳 中文</a>
+</p>
+
+<p align="center">
   <img src="assets/banner_zh.png" alt="作家文风 Skill 工厂" width="100%"/>
 </p>
 
@@ -23,8 +27,7 @@
   <a href="#-系统架构">架构</a> ·
   <a href="#-已收录作家">作家</a> ·
   <a href="#-调用示例">调用</a> ·
-  <a href="#-创建新作者-skill">创建新作者</a> ·
-  <a href="README.md">English</a>
+  <a href="#-创建新作者-skill">创建新作者</a>
 </p>
 
 ---
