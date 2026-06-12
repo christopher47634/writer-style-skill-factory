@@ -3,6 +3,10 @@
 </p>
 
 <p align="center">
+  <img src="assets/logo.png" alt="Logo" width="80"/>
+</p>
+
+<p align="center">
   <strong>把伟大作家的写作技艺蒸馏成可复用、可测试、可自我进化的 AI Skill。</strong>
 </p>
 
@@ -27,6 +31,10 @@
 
 ## 这是什么
 
+<p align="center">
+  <img src="assets/concept_en.png" alt="从文学技艺到 AI Skill" width="100%"/>
+</p>
+
 市面上大多数"AI 文风模仿"是关键词替换——*鲁迅就加短句，卡夫卡就写怪事*。结果像cosplay，不像写作。
 
 **Writer Style Skill Factory** 不同。它是一个三层系统：
@@ -44,7 +52,7 @@
 ## 系统架构
 
 <p align="center">
-  <img src="assets/architecture.svg" alt="系统架构" width="100%"/>
+  <img src="assets/architecture_zh.png" alt="系统架构" width="100%"/>
 </p>
 
 ### 三层分工
@@ -56,6 +64,10 @@
 | ✍️ | **style-\<author\>** | 16 个子 skill。接收主题，直接生成对应文风的成稿——非中文作者默认双语输出。 |
 
 ### 9 阶段详解
+
+<p align="center">
+  <img src="assets/pipeline_zh.png" alt="9阶段 Skill 蒸馏流水线" width="100%"/>
+</p>
 
 | 阶段 | 做什么 | 为什么重要 |
 |:----:|--------|-----------|
@@ -72,6 +84,10 @@
 ---
 
 ## 已收录作家
+
+<p align="center">
+  <img src="assets/authors_zh.png" alt="16位作家 · 8种语言" width="100%"/>
+</p>
 
 <table>
 <tr>

@@ -3,6 +3,10 @@
 </p>
 
 <p align="center">
+  <img src="assets/logo.png" alt="Logo" width="80"/>
+</p>
+
+<p align="center">
   <strong>Distill the craft of great writers into reusable, testable, and self-improving AI skills.</strong>
 </p>
 
@@ -27,6 +31,10 @@
 
 ## What Is This
 
+<p align="center">
+  <img src="assets/concept_en.png" alt="Concept: From Literary Craft to AI Skills" width="100%"/>
+</p>
+
 Most AI "writing style" prompts are surface-level keyword swaps — *add some short sentences for Lu Xun*, *mention alienation for Kafka*. The result reads like a costume, not a voice.
 
 **Writer Style Skill Factory** is different. It's a 3-layer system that:
@@ -44,7 +52,7 @@ The result: AI writing that captures *how* an author thinks, not just *what* the
 ## Architecture
 
 <p align="center">
-  <img src="assets/architecture.svg" alt="System Architecture" width="100%"/>
+  <img src="assets/architecture_en.png" alt="System Architecture" width="100%"/>
 </p>
 
 ### Three Layers
@@ -56,6 +64,10 @@ The result: AI writing that captures *how* an author thinks, not just *what* the
 | ✍️ | **style-\<author\>** | 16 sub-skills. Each receives a topic and produces a finished piece in that author's voice — with bilingual output for non-Chinese authors. |
 
 ### The 9 Phases
+
+<p align="center">
+  <img src="assets/pipeline_en.png" alt="9-Phase Skill Distillation Pipeline" width="100%"/>
+</p>
 
 | Phase | What It Does | Why It Matters |
 |:-----:|-------------|----------------|
@@ -72,6 +84,10 @@ The result: AI writing that captures *how* an author thinks, not just *what* the
 ---
 
 ## Included Authors
+
+<p align="center">
+  <img src="assets/authors_en.png" alt="16 Authors · 8 Languages" width="100%"/>
+</p>
 
 <table>
 <tr>
@@ -345,8 +361,19 @@ Checks: frontmatter structure, name/description fields, UTF-8 encoding, BOM dete
 writer-style-skill-factory/
 │
 ├── assets/
-│   ├── banner.svg                          # Repo banner
-│   └── architecture.svg                    # Architecture diagram
+│   ├── banner_en.png                       # Hero banner (English)
+│   ├── banner_zh.png                       # Hero banner (Chinese)
+│   ├── logo.png                            # Project logo
+│   ├── architecture_en.png                 # Architecture diagram (EN)
+│   ├── architecture_zh.png                 # Architecture diagram (ZH)
+│   ├── authors_en.png                      # Author matrix (EN)
+│   ├── authors_zh.png                      # Author matrix (ZH)
+│   ├── pipeline_en.png                     # 9-phase pipeline (EN)
+│   ├── pipeline_zh.png                     # 9-phase pipeline (ZH)
+│   ├── concept_en.png                      # Concept illustration
+│   ├── prompts.md                          # DALL-E prompts for regenerating images
+│   ├── banner.svg                          # SVG banner (fallback)
+│   └── architecture.svg                    # SVG architecture (fallback)
 │
 ├── writer-style-guide/                     # 🚪 Entry Point
 │   ├── SKILL.md                            #    Routing rules + author alias table
