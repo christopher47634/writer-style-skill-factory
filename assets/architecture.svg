@@ -1,0 +1,229 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1f6feb"/>
+      <stop offset="100%" style="stop-color:#58a6ff"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8957e5"/>
+      <stop offset="100%" style="stop-color:#bc8cff"/>
+    </linearGradient>
+    <linearGradient id="pink" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#db61a2"/>
+      <stop offset="100%" style="stop-color:#f778ba"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#238636"/>
+      <stop offset="100%" style="stop-color:#3fb950"/>
+    </linearGradient>
+    <linearGradient id="orange" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#d18616"/>
+      <stop offset="100%" style="stop-color:#f0883e"/>
+    </linearGradient>
+    <filter id="cardshadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="520" rx="8" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="450" y="35" font-family="system-ui, sans-serif" font-weight="700" font-size="16" fill="#e6edf3" text-anchor="middle">System Architecture</text>
+
+  <!-- Layer 1: Entry Point -->
+  <g transform="translate(280, 55)">
+    <rect x="0" y="0" width="340" height="65" rx="8" fill="#161b22" stroke="url(#blue)" stroke-width="1.5" filter="url(#cardshadow)"/>
+    <rect x="0" y="0" width="340" height="4" rx="2" fill="url(#blue)"/>
+    <text x="170" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="15" fill="#58a6ff" text-anchor="middle">writer-style-guide</text>
+    <text x="170" y="48" font-family="system-ui, sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Routing Entry Point · Alias Resolution · 4 Modes</text>
+  </g>
+
+  <!-- Arrow down from entry -->
+  <line x1="370" y1="120" x2="220" y2="155" stroke="#58a6ff" stroke-width="1" opacity="0.5" stroke-dasharray="4,3"/>
+  <line x1="530" y1="120" x2="680" y2="155" stroke="#58a6ff" stroke-width="1" opacity="0.5" stroke-dasharray="4,3"/>
+  <polygon points="218,155 226,155 222,162" fill="#58a6ff" opacity="0.5"/>
+  <polygon points="678,155 686,155 682,162" fill="#58a6ff" opacity="0.5"/>
+
+  <!-- Label on arrows -->
+  <text x="290" y="140" font-family="system-ui, sans-serif" font-size="10" fill="#58a6ff" opacity="0.7">"Write in X's style"</text>
+  <text x="570" y="140" font-family="system-ui, sans-serif" font-size="10" fill="#bc8cff" opacity="0.7">"Create/optimize skill"</text>
+
+  <!-- Layer 2: Mother Factory (left) -->
+  <g transform="translate(30, 165)">
+    <rect x="0" y="0" width="400" height="310" rx="8" fill="#161b22" stroke="url(#purple)" stroke-width="1.5" filter="url(#cardshadow)"/>
+    <rect x="0" y="0" width="400" height="4" rx="2" fill="url(#purple)"/>
+    <text x="200" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#bc8cff" text-anchor="middle">style-analysis-framework</text>
+    <text x="200" y="45" font-family="system-ui, sans-serif" font-size="10" fill="#8b949e" text-anchor="middle">9-Phase Mother Factory</text>
+
+    <!-- Phases -->
+    <g font-family="system-ui, sans-serif" font-size="11" fill="#8b949e">
+      <g transform="translate(20, 60)">
+        <rect x="0" y="0" width="170" height="28" rx="6" fill="#1f6feb20" stroke="#1f6feb" stroke-width="0.5"/>
+        <text x="85" y="18" text-anchor="middle" fill="#58a6ff">① Corpus Engineering</text>
+      </g>
+      <g transform="translate(210, 60)">
+        <rect x="0" y="0" width="170" height="28" rx="6" fill="#1f6feb20" stroke="#1f6feb" stroke-width="0.5"/>
+        <text x="85" y="18" text-anchor="middle" fill="#58a6ff">② Mechanism Extraction</text>
+      </g>
+      <g transform="translate(20, 98)">
+        <rect x="0" y="0" width="170" height="28" rx="6" fill="#8957e520" stroke="#8957e5" stroke-width="0.5"/>
+        <text x="85" y="18" text-anchor="middle" fill="#bc8cff">③ Skill Generation</text>
+      </g>
+      <g transform="translate(210, 98)">
+        <rect x="0" y="0" width="170" height="28" rx="6" fill="#8957e520" stroke="#8957e5" stroke-width="0.5"/>
+        <text x="85" y="18" text-anchor="middle" fill="#bc8cff">④ Author Scoring</text>
+      </g>
+      <g transform="translate(20, 136)">
+        <rect x="0" y="0" width="170" height="28" rx="6" fill="#db61a220" stroke="#db61a2" stroke-width="0.5"/>
+        <text x="85" y="18" text-anchor="middle" fill="#f778ba">⑤ Anti-Patterns</text>
+      </g>
+      <g transform="translate(210, 136)">
+        <rect x="0" y="0" width="170" height="28" rx="6" fill="#db61a220" stroke="#db61a2" stroke-width="0.5"/>
+        <text x="85" y="18" text-anchor="middle" fill="#f778ba">⑥ Golden Test Set</text>
+      </g>
+      <g transform="translate(20, 174)">
+        <rect x="0" y="0" width="170" height="28" rx="6" fill="#23863620" stroke="#238636" stroke-width="0.5"/>
+        <text x="85" y="18" text-anchor="middle" fill="#3fb950">⑦ Blind Evaluation</text>
+      </g>
+      <g transform="translate(210, 174)">
+        <rect x="0" y="0" width="170" height="28" rx="6" fill="#23863620" stroke="#238636" stroke-width="0.5"/>
+        <text x="85" y="18" text-anchor="middle" fill="#3fb950">⑧ Self-Iteration</text>
+      </g>
+      <g transform="translate(115, 212)">
+        <rect x="0" y="0" width="170" height="28" rx="6" fill="#d1861620" stroke="#d18616" stroke-width="0.5"/>
+        <text x="85" y="18" text-anchor="middle" fill="#f0883e">⑨ Stop Conditions</text>
+      </g>
+    </g>
+
+    <!-- Feedback loop -->
+    <g transform="translate(50, 255)">
+      <rect x="0" y="0" width="300" height="40" rx="6" fill="#23863615" stroke="#238636" stroke-width="0.5"/>
+      <text x="150" y="17" font-family="system-ui, sans-serif" font-size="10" fill="#3fb950" text-anchor="middle">Feedback Loop: Sub-skill failures → Cross-author pattern extraction</text>
+      <text x="150" y="32" font-family="system-ui, sans-serif" font-size="10" fill="#3fb950" text-anchor="middle">→ Mother factory upgrade → Re-test on 3+ diverse authors</text>
+    </g>
+  </g>
+
+  <!-- Layer 2: Sub-skills (right) -->
+  <g transform="translate(470, 165)">
+    <rect x="0" y="0" width="400" height="310" rx="8" fill="#161b22" stroke="url(#pink)" stroke-width="1.5" filter="url(#cardshadow)"/>
+    <rect x="0" y="0" width="400" height="4" rx="2" fill="url(#pink)"/>
+    <text x="200" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#f778ba" text-anchor="middle">style-&lt;author&gt; Sub-Skills</text>
+    <text x="200" y="45" font-family="system-ui, sans-serif" font-size="10" fill="#8b949e" text-anchor="middle">16 Author Skills · Each: SKILL.md + test-prompts.json</text>
+
+    <!-- Author grid -->
+    <g font-family="system-ui, sans-serif" font-size="10">
+      <!-- Row 1 -->
+      <g transform="translate(12, 58)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#1f6feb10" stroke="#1f6feb30" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#58a6ff" font-weight="600">鲁迅</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">Lu Xun · 中文</text>
+      </g>
+      <g transform="translate(110, 58)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#8957e510" stroke="#8957e530" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#bc8cff" font-weight="600">太宰治</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">Dazai · 日本語</text>
+      </g>
+      <g transform="translate(208, 58)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#db61a210" stroke="#db61a230" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#f778ba" font-weight="600">Kafka</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">卡夫卡 · Deutsch</text>
+      </g>
+      <g transform="translate(306, 58)">
+        <rect x="0" y="0" width="82" height="42" rx="5" fill="#23863610" stroke="#23863630" stroke-width="0.5"/>
+        <text x="41" y="17" text-anchor="middle" fill="#3fb950" font-weight="600">Tolstoy</text>
+        <text x="41" y="32" text-anchor="middle" fill="#484f58">托尔斯泰 · Рус</text>
+      </g>
+      <!-- Row 2 -->
+      <g transform="translate(12, 108)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#d1861610" stroke="#d1861630" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#f0883e" font-weight="600">芥川</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">Akutagawa · 日</text>
+      </g>
+      <g transform="translate(110, 108)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#1f6feb10" stroke="#1f6feb30" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#58a6ff" font-weight="600">Dostoevsky</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">陀氏 · Русский</text>
+      </g>
+      <g transform="translate(208, 108)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#8957e510" stroke="#8957e530" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#bc8cff" font-weight="600">Fitzgerald</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">菲茨杰拉德 · EN</text>
+      </g>
+      <g transform="translate(306, 108)">
+        <rect x="0" y="0" width="82" height="42" rx="5" fill="#db61a210" stroke="#db61a230" stroke-width="0.5"/>
+        <text x="41" y="17" text-anchor="middle" fill="#f778ba" font-weight="600">Schopenhauer</text>
+        <text x="41" y="32" text-anchor="middle" fill="#484f58">叔本华 · DE</text>
+      </g>
+      <!-- Row 3 -->
+      <g transform="translate(12, 158)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#23863610" stroke="#23863630" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#3fb950" font-weight="600">漱石</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">Soseki · 日本語</text>
+      </g>
+      <g transform="translate(110, 158)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#d1861610" stroke="#d1861630" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#f0883e" font-weight="600">谷崎</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">Tanizaki · 日</text>
+      </g>
+      <g transform="translate(208, 158)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#1f6feb10" stroke="#1f6feb30" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#58a6ff" font-weight="600">Gorky</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">高尔基 · Русский</text>
+      </g>
+      <g transform="translate(306, 158)">
+        <rect x="0" y="0" width="82" height="42" rx="5" fill="#8957e510" stroke="#8957e530" stroke-width="0.5"/>
+        <text x="41" y="17" text-anchor="middle" fill="#bc8cff" font-weight="600">南方周末</text>
+        <text x="41" y="32" text-anchor="middle" fill="#484f58">中文 · Journalism</text>
+      </g>
+      <!-- Row 4 -->
+      <g transform="translate(12, 208)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#db61a210" stroke="#db61a230" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#f778ba" font-weight="600">人民日报</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">中文 · Commentary</text>
+      </g>
+      <g transform="translate(110, 208)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#23863610" stroke="#23863630" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#3fb950" font-weight="600">澎湃新闻</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">中文 · Journalism</text>
+      </g>
+      <g transform="translate(208, 208)">
+        <rect x="0" y="0" width="88" height="42" rx="5" fill="#d1861610" stroke="#d1861630" stroke-width="0.5"/>
+        <text x="44" y="17" text-anchor="middle" fill="#f0883e" font-weight="600">新华社</text>
+        <text x="44" y="32" text-anchor="middle" fill="#484f58">中文 · News Agency</text>
+      </g>
+      <g transform="translate(306, 208)">
+        <rect x="0" y="0" width="82" height="42" rx="5" fill="#1f6feb10" stroke="#1f6feb30" stroke-width="0.5"/>
+        <text x="41" y="17" text-anchor="middle" fill="#58a6ff" font-weight="600">小约翰可汗</text>
+        <text x="41" y="32" text-anchor="middle" fill="#484f58">中文 · Knowledge</text>
+      </g>
+    </g>
+
+    <!-- Sub-skill structure note -->
+    <g transform="translate(20, 265)">
+      <rect x="0" y="0" width="360" height="32" rx="5" fill="#f778ba08" stroke="#f778ba30" stroke-width="0.5"/>
+      <text x="180" y="13" font-family="system-ui, sans-serif" font-size="10" fill="#f778ba" text-anchor="middle" font-weight="600">Each sub-skill contains:</text>
+      <text x="180" y="27" font-family="system-ui, sans-serif" font-size="10" fill="#8b949e" text-anchor="middle">SKILL.md (9-section structure, ≤500 lines) + test-prompts.json (15-30 prompts)</text>
+    </g>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(30, 490)">
+    <g font-family="system-ui, sans-serif" font-size="10" fill="#8b949e">
+      <circle cx="10" cy="8" r="4" fill="#58a6ff" opacity="0.5"/>
+      <text x="20" y="12">Routing</text>
+      <circle cx="90" cy="8" r="4" fill="#bc8cff" opacity="0.5"/>
+      <text x="100" y="12">Factory</text>
+      <circle cx="170" cy="8" r="4" fill="#f778ba" opacity="0.5"/>
+      <text x="180" y="12">Sub-skills</text>
+      <circle cx="260" cy="8" r="4" fill="#3fb950" opacity="0.5"/>
+      <text x="270" y="12">Feedback</text>
+      <circle cx="340" cy="8" r="4" fill="#f0883e" opacity="0.5"/>
+      <text x="350" y="12">Scoring</text>
+    </g>
+  </g>
+</svg>

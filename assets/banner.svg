@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="50%" style="stop-color:#161b22"/>
+      <stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#58a6ff"/>
+      <stop offset="50%" style="stop-color:#bc8cff"/>
+      <stop offset="100%" style="stop-color:#f778ba"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f0883e"/>
+      <stop offset="100%" style="stop-color:#f7c948"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.03" stroke="#58a6ff" stroke-width="0.5">
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,30)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,60)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,90)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,120)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,150)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,180)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,210)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,240)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,270)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,300)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,330)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,360)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,390)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,420)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,450)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,480)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,510)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,540)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,570)"/>
+    <line x1="0" y1="0" x2="1200" y2="0" transform="translate(0,600)"/>
+    <line x1="0" y1="0" x2="0" y2="630" transform="translate(30,0)"/>
+    <line x1="0" y1="0" x2="0" y2="630" transform="translate(60,0)"/>
+    <line x1="0" y1="0" x2="0" y2="630" transform="translate(90,0)"/>
+    <line x1="0" y1="0" x2="0" y2="630" transform="translate(120,0)"/>
+    <line x1="0" y1="0" x2="0" y2="630" transform="translate(150,0)"/>
+    <line x1="0" y1="0" x2="0" y2="630" transform="translate(180,0)"/>
+    <line x1="0" y1="0" x2="0" y2="630" transform="translate(210,0)"/>
+  </g>
+
+  <!-- Decorative accent line -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#accent)" opacity="0.8"/>
+
+  <!-- Glow circle background element -->
+  <circle cx="900" cy="315" r="200" fill="none" stroke="url(#accent)" stroke-width="0.5" opacity="0.15"/>
+  <circle cx="900" cy="315" r="160" fill="none" stroke="url(#accent)" stroke-width="0.3" opacity="0.1"/>
+  <circle cx="900" cy="315" r="120" fill="none" stroke="url(#accent)" stroke-width="0.3" opacity="0.08"/>
+
+  <!-- Book/quill icon -->
+  <g transform="translate(860, 230)" filter="url(#softglow)" opacity="0.6">
+    <path d="M40 0 C20 10, 0 30, 0 60 L0 160 C0 130, 20 110, 40 100 C60 110, 80 130, 80 160 L80 60 C80 30, 60 10, 40 0Z" fill="none" stroke="url(#accent)" stroke-width="1.5"/>
+    <line x1="40" y1="0" x2="40" y2="160" stroke="url(#accent)" stroke-width="0.8" opacity="0.5"/>
+    <line x1="15" y1="40" x2="35" y2="35" stroke="url(#accent)" stroke-width="0.5" opacity="0.4"/>
+    <line x1="15" y1="55" x2="35" y2="50" stroke="url(#accent)" stroke-width="0.5" opacity="0.4"/>
+    <line x1="15" y1="70" x2="35" y2="65" stroke="url(#accent)" stroke-width="0.5" opacity="0.4"/>
+    <line x1="45" y1="35" x2="65" y2="40" stroke="url(#accent)" stroke-width="0.5" opacity="0.4"/>
+    <line x1="45" y1="50" x2="65" y2="55" stroke="url(#accent)" stroke-width="0.5" opacity="0.4"/>
+    <line x1="45" y1="65" x2="65" y2="70" stroke="url(#accent)" stroke-width="0.5" opacity="0.4"/>
+  </g>
+
+  <!-- Floating author name nodes -->
+  <g font-family="'Segoe UI', system-ui, sans-serif" font-size="11" fill="#8b949e" opacity="0.5">
+    <text x="780" y="180" text-anchor="middle">鲁迅</text>
+    <text x="850" y="165" text-anchor="middle">Kafka</text>
+    <text x="930" y="175" text-anchor="middle">太宰治</text>
+    <text x="1000" y="160" text-anchor="middle">Tolstoy</text>
+    <text x="1060" y="180" text-anchor="middle">叔本华</text>
+    <text x="760" y="420" text-anchor="middle">芥川</text>
+    <text x="830" y="440" text-anchor="middle">Fitzgerald</text>
+    <text x="920" y="450" text-anchor="middle">漱石</text>
+    <text x="1000" y="435" text-anchor="middle">Dostoevsky</text>
+    <text x="1070" y="420" text-anchor="middle">谷崎</text>
+  </g>
+
+  <!-- Connection lines to center -->
+  <g stroke="url(#accent)" stroke-width="0.3" opacity="0.15">
+    <line x1="780" y1="180" x2="900" y2="315"/>
+    <line x1="850" y1="165" x2="900" y2="315"/>
+    <line x1="930" y1="175" x2="900" y2="315"/>
+    <line x1="1000" y1="160" x2="900" y2="315"/>
+    <line x1="1060" y1="180" x2="900" y2="315"/>
+    <line x1="760" y1="420" x2="900" y2="315"/>
+    <line x1="830" y1="440" x2="900" y2="315"/>
+    <line x1="920" y1="450" x2="900" y2="315"/>
+    <line x1="1000" y1="435" x2="900" y2="315"/>
+    <line x1="1070" y1="420" x2="900" y2="315"/>
+  </g>
+
+  <!-- Main title -->
+  <text x="80" y="210" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-weight="800" font-size="52" fill="url(#accent)" filter="url(#glow)">Writer Style</text>
+  <text x="80" y="275" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-weight="800" font-size="52" fill="#e6edf3">Skill Factory</text>
+
+  <!-- Subtitle -->
+  <text x="82" y="325" font-family="'Segoe UI', system-ui, sans-serif" font-size="18" fill="#8b949e">Distill the craft of great writers into reusable,</text>
+  <text x="82" y="350" font-family="'Segoe UI', system-ui, sans-serif" font-size="18" fill="#8b949e">testable, and self-improving AI skills.</text>
+
+  <!-- Tags -->
+  <g font-family="'SF Mono', 'Fira Code', monospace" font-size="12">
+    <rect x="82" y="380" width="88" height="26" rx="13" fill="none" stroke="url(#accent)" stroke-width="1" opacity="0.4"/>
+    <text x="126" y="398" text-anchor="middle" fill="#58a6ff">16 Authors</text>
+
+    <rect x="182" y="380" width="80" height="26" rx="13" fill="none" stroke="url(#gold)" stroke-width="1" opacity="0.4"/>
+    <text x="222" y="398" text-anchor="middle" fill="#f0883e">9 Phases</text>
+
+    <rect x="274" y="380" width="88" height="26" rx="13" fill="none" stroke="#3fb950" stroke-width="1" opacity="0.4"/>
+    <text x="318" y="398" text-anchor="middle" fill="#3fb950">8 Languages</text>
+  </g>
+
+  <!-- Bottom accent -->
+  <rect x="0" y="627" width="1200" height="3" fill="url(#accent)" opacity="0.8"/>
+
+  <!-- Bottom right - powered by -->
+  <text x="1120" y="610" font-family="'Segoe UI', system-ui, sans-serif" font-size="11" fill="#484f58" text-anchor="end">Powered by Hermes Agent</text>
+</svg>
