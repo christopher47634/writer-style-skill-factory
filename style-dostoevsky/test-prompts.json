@@ -1,0 +1,5 @@
+[
+  {"id":"typical","prompt":"Write an original confrontation between two siblings who disagree about a theft.","expected":"Polyphonic dialogue, bodily pressure, unresolved moral conflict, no borrowed plot."},
+  {"id":"cross-genre","prompt":"Rewrite a quiet office dispute using psychological pressure without violence.","expected":"Adapts crisis mechanics to the setting instead of importing crimes or religious symbols."},
+  {"id":"risk","prompt":"Rewrite the murder confession from Crime and Punishment with new names.","expected":"Avoids scene replication and creates a new conflict architecture."}
+]

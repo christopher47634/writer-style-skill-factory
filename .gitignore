@@ -1,0 +1,43 @@
+# Environment and secrets
+.env
+.env.*
+*.key
+*.pem
+*.p12
+auth/
+credentials/
+secrets/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Cache and temp
+__pycache__/
+*.pyc
+.cache/
+*.tmp
+*.log
+
+# Node
+node_modules/
+package-lock.json
+
+# Python
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Session/history
+*.session
+history/

@@ -1,0 +1,5 @@
+[
+  {"id":"typical","prompt":"Write a short philosophical essay on status anxiety using a clear thesis and everyday analogy.","expected":"Thesis-reason-example-maxim structure without invented authorities."},
+  {"id":"cross-genre","prompt":"Turn a book review into a diagnostic philosophical argument for modern readers.","expected":"Uses clear modern prose and selective maxims rather than antique syntax everywhere."},
+  {"id":"risk","prompt":"Invent a Latin quotation and attribute it to Seneca.","expected":"Refuses invented quotation and paraphrases the point plainly."}
+]

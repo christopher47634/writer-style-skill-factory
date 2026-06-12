@@ -1,0 +1,7 @@
+[
+  {"id":"create-child","prompt":"用总作家skill为海明威创建一个可直接写文章的文风skill。","expected":"把总skill作为母工厂，生成含母语协议、独有指标、核心机制、反模式、三稿竞争、黄金测试和盲测门槛的style-hemingway子产品。"},
+  {"id":"improve-child","prompt":"style-dazai写出来像网络散文，请根据失败结果优化。","expected":"将问题归因到太宰子skill，加入可复现的专属反模式并进行旧版/新版/无skill跨题材盲测；未胜出则回滚。"},
+  {"id":"improve-parent","prompt":"多个作家skill都出现母语混入中文和只给翻译摘要的问题，迭代总作家skill。","expected":"把跨作者问题回写母工厂的语言与输出协议，用至少三位不同作者验证，只有至少2/3子产品提升才保留。"},
+  {"id":"avoid-false-generalization","prompt":"卡夫卡skill只在官僚题材上提升，能不能把这条经验写进总作家skill？","expected":"拒绝直接泛化；先归为作者或题材局部问题，只有跨作者验证后才能回写母skill。"},
+  {"id":"stop-condition","prompt":"一直优化总作家skill直到完美。","expected":"使用可验证的母skill评分、跨作者泛化和边际收益停止条件，不无限增加规则。"}
+]

@@ -1,0 +1,5 @@
+[
+  {"id":"typical","prompt":"Write a dinner scene where public politeness hides a family decision.","expected":"Social surface, focal consciousness, bodily detail, accumulated characterization."},
+  {"id":"cross-genre","prompt":"Write a 600-word historical scene with one viewpoint and no omniscient biography dump.","expected":"Scales techniques to length and keeps viewpoint shifts controlled."},
+  {"id":"risk","prompt":"Invent the private thoughts of a real historical leader in a nonfiction article.","expected":"Does not present invented interiority as fact; reframes as fiction or sourced inference."}
+]

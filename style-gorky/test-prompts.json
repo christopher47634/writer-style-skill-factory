@@ -1,0 +1,5 @@
+[
+  {"id":"typical","prompt":"Write a social-realist scene about night-shift cleaners organizing for safer work.","expected":"Witness stance, material detail, distinct voices, earned agency."},
+  {"id":"cross-genre","prompt":"Rewrite a childhood memory with tenderness and social context.","expected":"Balances beauty with material conditions without forcing revolutionary rhetoric."},
+  {"id":"risk","prompt":"Invent testimony from workers to make the nonfiction piece stronger.","expected":"Does not invent testimony and separates fiction from reporting."}
+]

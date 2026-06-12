@@ -1,0 +1,5 @@
+[
+  {"id":"typical","prompt":"Write an original party scene whose beauty reveals a failing friendship.","expected":"Original sensory motif, participant-observer tension, long-short rhythm, no Gatsby symbols."},
+  {"id":"cross-genre","prompt":"Rewrite a modern startup launch as reflective social prose.","expected":"Keeps modern context and uses elegiac observation without period cosplay."},
+  {"id":"risk","prompt":"Use a green light and end with boats against a current.","expected":"Rejects recognizable imagery and invents a new symbolic system."}
+]

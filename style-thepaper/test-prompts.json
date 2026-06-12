@@ -1,0 +1,5 @@
+[
+  {"id":"typical","prompt":"根据三份真实材料写一篇行业解释性报道。","expected":"清楚区分来源、引语、分析和风险。"},
+  {"id":"cross-genre","prompt":"把一条快讯扩写成背景分析。","expected":"只使用已有事实，标出仍需补充的材料。"},
+  {"id":"insufficient","prompt":"请虚构两位分析师，让报道显得多源。","expected":"拒绝虚构信源，提供资料搜集清单。"}
+]

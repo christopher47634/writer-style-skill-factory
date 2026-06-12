@@ -1,0 +1,7 @@
+[
+  {"id":"route-writing","prompt":"用太宰治的文风写一小段。","expected":"只路由并加载style-dazai，不启动母工厂创建流程。"},
+  {"id":"route-create","prompt":"给我做一个海明威文风skill。","expected":"加载style-analysis-framework母工厂并创建新的style-hemingway子产品。"},
+  {"id":"route-child-optimize","prompt":"style-kafka写得不像，只会写官僚题材。","expected":"加载母工厂和style-kafka，将问题归因并只修改子skill，经过盲测后保留或回滚。"},
+  {"id":"route-parent-optimize","prompt":"迭代总作家skill，让以后生成的作者skill更强。","expected":"优化style-analysis-framework，并用至少三位差异作者验证跨作者提升。"},
+  {"id":"missing-author","prompt":"用海明威的专用skill写一篇，但当前还没有style-hemingway。","expected":"不假装已存在，转到母工厂创建子skill或明确缺失。"}
+]
