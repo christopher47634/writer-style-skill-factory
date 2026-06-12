@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="Writer Style Skill Factory" width="100%"/>
+  <img src="assets/banner_en.png" alt="Writer Style Skill Factory" width="100%"/>
 </p>
 
 <p align="center">
