@@ -41,3 +41,19 @@ build/
 # Session/history
 *.session
 history/
+# Local media & generated assets (never commit)
+package.json
+frames/
+tts/
+scenes/
+*.mp4
+*.mp3
+audio_concat.mp3
+build_audio.py
+build_subtitles.py
+generate_tts.py
+regen_tts.py
+capture_frames.js
+subtitles.ass
+verify_s*.png
+.hermes/
