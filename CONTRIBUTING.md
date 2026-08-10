@@ -88,10 +88,9 @@ and do not block merging.
 
 - [ ] `python3 validate.py` reports `0 failed`
 - [ ] Changes are scoped; no edits to READMEs, LICENSE, `assets/`, or unrelated files
+- [ ] No secrets or tokens in the diff
 - [ ] No generated media or temporary files committed (`frames/`, `tts/`,
       `scenes/`, `*.mp4`, `*.mp3`, `verify_*.png`, ...) — leave them untracked
-- [ ] No secrets or tokens in the diff (the origin remote URL contains a token —
-      never paste it)
 
 ## License
 
