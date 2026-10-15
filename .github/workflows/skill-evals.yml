@@ -1,0 +1,36 @@
+name: skill-evals
+
+# Free, deterministic layers only. The behaviour layer (with/without skill,
+# calls a model) is on-demand: see docs/EVALS.md.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  free-layers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test dependency
+        run: python -m pip install pytest
+      - name: Legacy validator
+        run: python validate.py
+      - name: Structure lint (frontmatter, name, description)
+        run: python scripts/quick_validate.py
+      - name: evals.json schema
+        run: python scripts/validate_evals.py
+      - name: Registry in sync with directories
+        run: python scripts/check_registry.py
+      - name: Trigger routing and description overlap
+        run: python scripts/check_triggers.py
+      - name: Security scan
+        run: python scripts/security_scan.py
+      - name: Script unit tests
+        run: python -m pytest -q

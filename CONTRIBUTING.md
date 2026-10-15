@@ -50,6 +50,22 @@ It then runs a Security & Cleanup check.
 Current `main` result: `341 passed, 0 failed, 5 warnings`. Warnings are advisory
 and do not block merging.
 
+## Free-tier checks (also run in CI)
+
+```sh
+python validate.py
+python scripts/quick_validate.py      # frontmatter / name / description
+python scripts/validate_evals.py      # <skill>/evals/evals.json schema
+python scripts/check_registry.py      # registry.json vs directories (--write to regenerate)
+python scripts/check_triggers.py      # description overlap + routing queries
+python scripts/security_scan.py       # secrets / dangerous commands
+python -m pytest -q                   # tests for the scripts above
+```
+
+A new author skill also needs `evals/evals.json` (see `docs/EVALS.md`), a few
+queries in `evals/routing.json`, and an entry in `registry.json`
+(`python scripts/check_registry.py --write`). The behaviour layer is on demand only.
+
 ## Adding a new author skill
 
 1. Create the skill directory using a kebab-case slug:

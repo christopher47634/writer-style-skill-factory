@@ -57,3 +57,7 @@ capture_frames.js
 subtitles.ass
 verify_s*.png
 .hermes/
+
+# On-demand behaviour eval output
+evals-workspace/
+.pytest_cache/
