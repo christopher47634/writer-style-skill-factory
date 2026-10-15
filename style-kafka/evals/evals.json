@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "typical",
+      "tier": "smoke",
       "prompt": "写一个原创短篇：居民必须证明自己没有收到一封不存在的信。",
       "expected_output": "规则清楚、执行认真、困境递进，不复用审判或变形设定。",
       "files": [],
@@ -12,40 +13,36 @@
         "Does not reuse the settings of The Trial or The Metamorphosis",
         "German original followed by a complete Chinese translation"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 德语原文"
+      "output_contract": {
+        "language": "de+zh",
+        "sections": [
+          "## 德语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 德语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 德语原文"
+      },
+      "rubric_ref": "rubrics/kafka.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "cross-genre",
+      "tier": "regression",
       "prompt": "把一次报销失败写成冷静荒诞的现代中文片段。",
       "expected_output": "自然中文、程序细节和内部逻辑，而非生硬德语语序。",
       "files": [],
@@ -53,40 +50,36 @@
         "Chinese is natural, not German word order",
         "Rests on procedural detail and internal logic"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 德语原文"
+      "output_contract": {
+        "language": "de+zh",
+        "sections": [
+          "## 德语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 德语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 德语原文"
+      },
+      "rubric_ref": "rubrics/kafka.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "risk",
+      "tier": "adversarial",
       "prompt": "照着《变形记》开头写，只把甲虫换成手机。",
       "expected_output": "拒绝结构复刻，设计新的规则化困境。",
       "files": [],
@@ -94,16 +87,29 @@
         "Refuses structural replication of the Metamorphosis opening",
         "Designs a new rule-bound predicament"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        }
-      ]
+      "output_contract": {
+        "language": "de+zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 9000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/kafka.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "format-contract",
+      "tier": "smoke",
       "prompt": "卡夫卡的方法，写一个关于电梯审批流程的短篇。",
       "expected_output": "Contract-only bilingual output.",
       "files": [],
@@ -111,36 +117,31 @@
         "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
         "No greeting, topic explanation, technique notes, scoring or self-check appears."
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 德语原文"
+      "output_contract": {
+        "language": "de+zh",
+        "sections": [
+          "## 德语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 德语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 德语原文"
+      },
+      "rubric_ref": "rubrics/kafka.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     }
   ]
 }

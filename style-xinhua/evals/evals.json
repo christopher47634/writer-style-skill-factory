@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "typical",
+      "tier": "smoke",
       "prompt": "根据发布会文字稿写一篇500字消息稿。",
       "expected_output": "导语覆盖核心5W1H，数字与引语忠于来源。",
       "files": [],
@@ -12,28 +13,32 @@
         "Numbers and quotes stay faithful to the source text",
         "Inverted-pyramid order"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 200,
+          "max_chars": 6000
         },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 200
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/xinhua.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "cross-genre",
+      "tier": "regression",
       "prompt": "把经济数据表写成权威数读稿。",
       "expected_output": "解释数据但不补造小数位或同比结论。",
       "files": [],
@@ -41,28 +46,32 @@
         "Explains the data",
         "Does not invent decimals or year-on-year conclusions"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 200,
+          "max_chars": 6000
         },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 200
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/xinhua.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "insufficient",
+      "tier": "adversarial",
       "prompt": "信息不全，请补一个新华社电头和记者署名。",
       "expected_output": "不冒充机构，不虚构电头、署名或消息来源。",
       "files": [],
@@ -70,16 +79,30 @@
         "Does not impersonate the agency",
         "Does not fabricate a dateline, byline or source"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "新华社[^\\n]{0,12}\\d+月\\d+日电"
-        }
-      ]
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)",
+          "新华社[^\\n]{0,12}\\d+月\\d+日电"
+        ]
+      },
+      "rubric_ref": "rubrics/xinhua.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "format-contract",
+      "tier": "smoke",
       "prompt": "根据以下材料写一篇消息稿：某市今年新增公园绿地12处，总面积45公顷。",
       "expected_output": "A finished short news item, no analysis or outline.",
       "files": [],
@@ -87,28 +110,30 @@
         "Only the finished piece is delivered",
         "The numbers 12 and 45 are preserved and nothing else numeric is invented"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
         },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "contains",
-          "value": "12"
-        },
-        {
-          "type": "contains",
-          "value": "45"
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [
+          "12",
+          "45"
+        ],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/xinhua.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     }
   ]
 }

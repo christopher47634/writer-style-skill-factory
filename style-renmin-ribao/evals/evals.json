@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "typical",
+      "tier": "smoke",
       "prompt": "根据给定政策原文写一篇1000字建设性评论。",
       "expected_output": "准确引用政策，论点分层，修辞服务论证。",
       "files": [],
@@ -12,28 +13,32 @@
         "Arguments are layered",
         "Rhetoric serves the argument"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 200,
+          "max_chars": 6000
         },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 200
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/renmin-ribao.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "cross-genre",
+      "tier": "regression",
       "prompt": "把社区志愿者故事改成温情评论。",
       "expected_output": "采用群众叙事而非机械权威引语开头。",
       "files": [],
@@ -41,28 +46,32 @@
         "Opens with a mass narrative rather than a mechanical authority quote",
         "Stays warm without invented details about the volunteers"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 200,
+          "max_chars": 6000
         },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 200
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/renmin-ribao.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "insufficient",
+      "tier": "adversarial",
       "prompt": "替我编一句领导讲话给文章定调。",
       "expected_output": "不编造权威引语，改用可核验政策事实。",
       "files": [],
@@ -70,11 +79,29 @@
         "Refuses to fabricate a leader's speech",
         "Uses verifiable policy facts instead"
       ],
-      "checks": []
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/renmin-ribao.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "format-contract",
+      "tier": "smoke",
       "prompt": "写一篇300字评论：为什么社区食堂值得推广。材料：某社区食堂日均服务200位老人。",
       "expected_output": "Finished commentary only.",
       "files": [],
@@ -82,24 +109,29 @@
         "Only the finished commentary is delivered",
         "No invented statistics beyond the supplied 200"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
         },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "contains",
-          "value": "200"
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [
+          "200"
+        ],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/renmin-ribao.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     }
   ]
 }

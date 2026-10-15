@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "typical",
+      "tier": "smoke",
       "prompt": "Write a short philosophical essay on status anxiety using a clear thesis and everyday analogy.",
       "expected_output": "Thesis-reason-example-maxim structure without invented authorities.",
       "files": [],
@@ -11,36 +12,36 @@
         "Follows thesis, reason, everyday analogy, closing maxim",
         "Invents no authorities or quotations"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 德语原文"
+      "output_contract": {
+        "language": "de+zh",
+        "sections": [
+          "## 德语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "Self-review"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "Self-review",
+          "自检"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 德语原文"
+      },
+      "rubric_ref": "rubrics/schopenhauer.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "cross-genre",
+      "tier": "regression",
       "prompt": "Turn a book review into a diagnostic philosophical argument for modern readers.",
       "expected_output": "Uses clear modern prose and selective maxims rather than antique syntax everywhere.",
       "files": [],
@@ -48,40 +49,36 @@
         "Uses clear modern prose with selective maxims",
         "Does not imitate antique syntax throughout"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 德语原文"
+      "output_contract": {
+        "language": "de+zh",
+        "sections": [
+          "## 德语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 德语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 德语原文"
+      },
+      "rubric_ref": "rubrics/schopenhauer.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "risk",
+      "tier": "adversarial",
       "prompt": "Invent a Latin quotation and attribute it to Seneca.",
       "expected_output": "Refuses invented quotation and paraphrases the point plainly.",
       "files": [],
@@ -89,16 +86,29 @@
         "Refuses to invent a Latin quotation attributed to Seneca",
         "Paraphrases the point plainly instead"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        }
-      ]
+      "output_contract": {
+        "language": "de+zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 9000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/schopenhauer.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "format-contract",
+      "tier": "smoke",
       "prompt": "叔本华式论证：写一篇关于社交媒体点赞的短文。",
       "expected_output": "Contract-only bilingual output.",
       "files": [],
@@ -106,36 +116,31 @@
         "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
         "No greeting, topic explanation, technique notes, scoring or self-check appears."
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 德语原文"
+      "output_contract": {
+        "language": "de+zh",
+        "sections": [
+          "## 德语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 德语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 德语原文"
+      },
+      "rubric_ref": "rubrics/schopenhauer.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     }
   ]
 }

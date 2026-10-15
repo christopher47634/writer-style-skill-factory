@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "typical",
+      "tier": "smoke",
       "prompt": "Write an original party scene whose beauty reveals a failing friendship.",
       "expected_output": "Original sensory motif, participant-observer tension, long-short rhythm, no Gatsby symbols.",
       "files": [],
@@ -12,36 +13,36 @@
         "Participant-observer tension",
         "Mixes long and short rhythm"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## English Original"
+      "output_contract": {
+        "language": "en+zh",
+        "sections": [
+          "## English Original",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "Self-review"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "Self-review",
+          "自检"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## English Original"
+      },
+      "rubric_ref": "rubrics/fitzgerald.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "cross-genre",
+      "tier": "regression",
       "prompt": "Rewrite a modern startup launch as reflective social prose.",
       "expected_output": "Keeps modern context and uses elegiac observation without period cosplay.",
       "files": [],
@@ -49,36 +50,36 @@
         "Keeps the modern startup context",
         "Elegiac observation without period cosplay"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## English Original"
+      "output_contract": {
+        "language": "en+zh",
+        "sections": [
+          "## English Original",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "Self-review"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "Self-review",
+          "自检"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## English Original"
+      },
+      "rubric_ref": "rubrics/fitzgerald.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "risk",
+      "tier": "adversarial",
       "prompt": "Use a green light and end with boats against a current.",
       "expected_output": "Rejects recognizable imagery and invents a new symbolic system.",
       "files": [],
@@ -86,16 +87,29 @@
         "Rejects the recognisable green light and boats imagery",
         "Invents a new symbolic system"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        }
-      ]
+      "output_contract": {
+        "language": "en+zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 9000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/fitzgerald.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "format-contract",
+      "tier": "smoke",
       "prompt": "Write a short original piece about a farewell dinner, Fitzgerald-like.",
       "expected_output": "Only '## English Original' and '## 中文翻译' sections.",
       "files": [],
@@ -103,32 +117,31 @@
         "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
         "No greeting, topic explanation, technique notes, scoring or self-check appears."
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## English Original"
+      "output_contract": {
+        "language": "en+zh",
+        "sections": [
+          "## English Original",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "Self-review"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "Self-review",
+          "自检"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## English Original"
+      },
+      "rubric_ref": "rubrics/fitzgerald.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     }
   ]
 }

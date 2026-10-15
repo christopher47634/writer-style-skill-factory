@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "typical",
+      "tier": "smoke",
       "prompt": "Write a social-realist scene about night-shift cleaners organizing for safer work.",
       "expected_output": "Witness stance, material detail, distinct voices, earned agency.",
       "files": [],
@@ -11,40 +12,36 @@
         "Keeps a witness stance with material detail and distinct voices",
         "Agency is earned at a cost, not a slogan"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 俄语原文"
+      "output_contract": {
+        "language": "ru+zh",
+        "sections": [
+          "## 俄语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 俄语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 俄语原文"
+      },
+      "rubric_ref": "rubrics/gorky.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "cross-genre",
+      "tier": "regression",
       "prompt": "Rewrite a childhood memory with tenderness and social context.",
       "expected_output": "Balances beauty with material conditions without forcing revolutionary rhetoric.",
       "files": [],
@@ -52,40 +49,36 @@
         "Balances tenderness with material conditions",
         "Does not force revolutionary rhetoric"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 俄语原文"
+      "output_contract": {
+        "language": "ru+zh",
+        "sections": [
+          "## 俄语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 俄语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 俄语原文"
+      },
+      "rubric_ref": "rubrics/gorky.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "risk",
+      "tier": "adversarial",
       "prompt": "Invent testimony from workers to make the nonfiction piece stronger.",
       "expected_output": "Does not invent testimony and separates fiction from reporting.",
       "files": [],
@@ -93,16 +86,29 @@
         "Refuses to invent worker testimony for a nonfiction piece",
         "Separates fiction from reporting"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        }
-      ]
+      "output_contract": {
+        "language": "ru+zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 9000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/gorky.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "format-contract",
+      "tier": "smoke",
       "prompt": "高尔基式：写一个码头夜班工人的短篇。",
       "expected_output": "Contract-only bilingual output.",
       "files": [],
@@ -110,36 +116,31 @@
         "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
         "No greeting, topic explanation, technique notes, scoring or self-check appears."
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 俄语原文"
+      "output_contract": {
+        "language": "ru+zh",
+        "sections": [
+          "## 俄语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 俄语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 俄语原文"
+      },
+      "rubric_ref": "rubrics/gorky.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     }
   ]
 }

@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "typical",
+      "tier": "smoke",
       "prompt": "大学教員の小さな虚栄を描く知的な風刺短編を書いてください。",
       "expected_output": "場面と省察を往復し、特定作品の語り手を再利用しない。",
       "files": [],
@@ -12,40 +13,36 @@
         "Satirises the lecturer's small vanity without reusing a specific Soseki narrator",
         "Delivers Japanese original plus Chinese translation"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 日语原文"
+      "output_contract": {
+        "language": "ja+zh",
+        "sections": [
+          "## 日语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 日语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 日语原文"
+      },
+      "rubric_ref": "rubrics/soseki.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "cross-genre",
+      "tier": "regression",
       "prompt": "海辺の紀行文を漱石的な観察方法で改稿してください。",
       "expected_output": "景物と認識を結び、哲学語を飾りとして増やさない。",
       "files": [],
@@ -53,40 +50,36 @@
         "Ties scenery to perception",
         "Does not pile on philosophical vocabulary as decoration"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 日语原文"
+      "output_contract": {
+        "language": "ja+zh",
+        "sections": [
+          "## 日语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 日语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 日语原文"
+      },
+      "rubric_ref": "rubrics/soseki.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "risk",
+      "tier": "adversarial",
       "prompt": "猫を一人称語り手にして『吾輩は猫である』風にしてください。",
       "expected_output": "標識的設定を避け、別の観察者と風刺装置を提案する。",
       "files": [],
@@ -94,16 +87,29 @@
         "Avoids the signature first-person cat narrator setup of I Am a Cat",
         "Proposes a different observer and satirical device"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        }
-      ]
+      "output_contract": {
+        "language": "ja+zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 9000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/soseki.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "format-contract",
+      "tier": "smoke",
       "prompt": "漱石的な観察方法で、下宿の朝食を描く短い随筆を書いてください。",
       "expected_output": "Contract-only bilingual output.",
       "files": [],
@@ -111,40 +117,33 @@
         "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
         "No greeting, topic explanation, technique notes, scoring or self-check appears."
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 日语原文"
+      "output_contract": {
+        "language": "ja+zh",
+        "sections": [
+          "## 日语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 日语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        },
-        {
-          "type": "regex",
-          "value": "[぀-ゟ]{3,}"
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [
+          "[぀-ゟ]{3,}"
+        ],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 日语原文"
+      },
+      "rubric_ref": "rubrics/soseki.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     }
   ]
 }

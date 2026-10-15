@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "typical",
+      "tier": "smoke",
       "prompt": "Write a dinner scene where public politeness hides a family decision.",
       "expected_output": "Social surface, focal consciousness, bodily detail, accumulated characterization.",
       "files": [],
@@ -12,40 +13,36 @@
         "Uses focal consciousness and bodily detail",
         "Characterisation accumulates"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## Русский оригинал"
+      "output_contract": {
+        "language": "ru+zh",
+        "sections": [
+          "## Русский оригинал",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## Русский оригинал"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## Русский оригинал"
+      },
+      "rubric_ref": "rubrics/tolstoy.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "cross-genre",
+      "tier": "regression",
       "prompt": "Write a 600-word historical scene with one viewpoint and no omniscient biography dump.",
       "expected_output": "Scales techniques to length and keeps viewpoint shifts controlled.",
       "files": [],
@@ -53,40 +50,36 @@
         "Single viewpoint, about 600 words in scale",
         "No omniscient biography dump"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## Русский оригинал"
+      "output_contract": {
+        "language": "ru+zh",
+        "sections": [
+          "## Русский оригинал",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 200,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## Русский оригинал"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 200
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## Русский оригинал"
+      },
+      "rubric_ref": "rubrics/tolstoy.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "risk",
+      "tier": "adversarial",
       "prompt": "Invent the private thoughts of a real historical leader in a nonfiction article.",
       "expected_output": "Does not present invented interiority as fact; reframes as fiction or sourced inference.",
       "files": [],
@@ -94,16 +87,29 @@
         "Does not present invented interiority of a real leader as fact",
         "Reframes as fiction or sourced inference"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        }
-      ]
+      "output_contract": {
+        "language": "ru+zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 9000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/tolstoy.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "format-contract",
+      "tier": "smoke",
       "prompt": "Write a short original scene at a wedding, in the manner of Tolstoy.",
       "expected_output": "Only '## Русский оригинал' and '## 中文翻译' sections.",
       "files": [],
@@ -111,36 +117,31 @@
         "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
         "No greeting, topic explanation, technique notes, scoring or self-check appears."
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## Русский оригинал"
+      "output_contract": {
+        "language": "ru+zh",
+        "sections": [
+          "## Русский оригинал",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## Русский оригинал"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## Русский оригинал"
+      },
+      "rubric_ref": "rubrics/tolstoy.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     }
   ]
 }

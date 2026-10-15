@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "route-writing",
+      "tier": "smoke",
       "prompt": "用太宰治的文风写一小段。",
       "expected_output": "只路由并加载style-dazai，不启动母工厂创建流程。",
       "files": [],
@@ -11,11 +12,29 @@
         "Routes to style-dazai only",
         "Does not start the factory creation flow"
       ],
-      "checks": []
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/writer-style-guide.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "route-create",
+      "tier": "regression",
       "prompt": "给我做一个海明威文风skill。",
       "expected_output": "加载style-analysis-framework母工厂并创建新的style-hemingway子产品。",
       "files": [],
@@ -23,11 +42,29 @@
         "Loads the style-analysis-framework factory",
         "Creates a new style-hemingway child"
       ],
-      "checks": []
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/writer-style-guide.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "route-child-optimize",
+      "tier": "regression",
       "prompt": "style-kafka写得不像，只会写官僚题材。",
       "expected_output": "加载母工厂和style-kafka，将问题归因并只修改子skill，经过盲测后保留或回滚。",
       "files": [],
@@ -36,11 +73,29 @@
         "Attributes the issue and edits only the child skill",
         "Keeps or rolls back after a blind test"
       ],
-      "checks": []
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/writer-style-guide.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "route-parent-optimize",
+      "tier": "regression",
       "prompt": "迭代总作家skill，让以后生成的作者skill更强。",
       "expected_output": "优化style-analysis-framework，并用至少三位差异作者验证跨作者提升。",
       "files": [],
@@ -48,11 +103,29 @@
         "Optimises style-analysis-framework",
         "Validates cross-author gains with at least three different authors"
       ],
-      "checks": []
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/writer-style-guide.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 5,
       "name": "missing-author",
+      "tier": "adversarial",
       "prompt": "用海明威的专用skill写一篇，但当前还没有style-hemingway。",
       "expected_output": "不假装已存在，转到母工厂创建子skill或明确缺失。",
       "files": [],
@@ -60,11 +133,29 @@
         "Does not pretend style-hemingway exists",
         "Routes to the factory to create it or states it is missing"
       ],
-      "checks": []
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/writer-style-guide.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 6,
       "name": "ambiguous-request",
+      "tier": "adversarial",
       "prompt": "帮我写一篇文章。",
       "expected_output": "Asks which author style is wanted rather than guessing.",
       "files": [],
@@ -72,7 +163,24 @@
         "Does not silently pick an author",
         "Asks for the author or lists available style skills"
       ],
-      "checks": []
+      "output_contract": {
+        "language": "zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 6000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/writer-style-guide.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     }
   ]
 }

@@ -4,6 +4,7 @@
     {
       "id": 1,
       "name": "typical",
+      "tier": "smoke",
       "prompt": "用太宰治的文风写一篇关于同学聚会失败经历的告白体短篇。",
       "expected_output": "先给自然的日语原创成稿，再给忠实中文翻译；呈现自我形象与泄露本心的错位、笑意与悲哀，避免复用原作句子。",
       "files": [],
@@ -12,44 +13,36 @@
         "Shows a gap between self-image and what the narrator lets slip, with laughter close to sorrow",
         "Gives a faithful Chinese translation, not a summary"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 日语原文"
+      "output_contract": {
+        "language": "ja+zh",
+        "sections": [
+          "## 日语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 日语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        },
-        {
-          "type": "starts_with",
-          "value": "## 日语原文"
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 日语原文"
+      },
+      "rubric_ref": "rubrics/dazai.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 2,
       "name": "cross-genre",
+      "tier": "regression",
       "prompt": "明るい紀行文を太宰的な方法で改稿してください。",
       "expected_output": "紀行モードを選び、自己否定や虚無を強制しない。",
       "files": [],
@@ -57,40 +50,36 @@
         "Chooses the travelogue mode and keeps a bright tone",
         "Does not force self-denial or nihilism onto a cheerful piece"
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 日语原文"
+      "output_contract": {
+        "language": "ja+zh",
+        "sections": [
+          "## 日语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 日语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 日语原文"
+      },
+      "rubric_ref": "rubrics/dazai.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     },
     {
       "id": 3,
       "name": "risk",
+      "tier": "adversarial",
       "prompt": "『人間失格』の三枚写真構成をそのまま使ってください。",
       "expected_output": "構造複製を避け、別の告白装置を設計する。",
       "files": [],
@@ -98,16 +87,29 @@
         "Does not reuse the three-photographs structure of No Longer Human",
         "Invents a different confessional device"
       ],
-      "checks": [
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        }
-      ]
+      "output_contract": {
+        "language": "ja+zh",
+        "sections": [],
+        "length": {
+          "min_chars": 0,
+          "max_chars": 9000
+        },
+        "must_not_contain": [],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ]
+      },
+      "rubric_ref": "rubrics/dazai.json",
+      "pass_threshold": {
+        "overall": 3.0,
+        "min_dimension": 2
+      }
     },
     {
       "id": 4,
       "name": "format-contract",
+      "tier": "smoke",
       "prompt": "太宰治の方法で、終電を逃した夜の短い随筆を書いてください。",
       "expected_output": "Contract-only output beginning with the Japanese section header.",
       "files": [],
@@ -115,40 +117,31 @@
         "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
         "No greeting, topic explanation, technique notes, scoring or self-check appears."
       ],
-      "checks": [
-        {
-          "type": "regex",
-          "value": "\\A\\s*## 日语原文"
+      "output_contract": {
+        "language": "ja+zh",
+        "sections": [
+          "## 日语原文",
+          "## 中文翻译"
+        ],
+        "length": {
+          "min_chars": 300,
+          "max_chars": 9000
         },
-        {
-          "type": "contains",
-          "value": "## 日语原文"
-        },
-        {
-          "type": "contains",
-          "value": "## 中文翻译"
-        },
-        {
-          "type": "not_regex",
-          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
-        },
-        {
-          "type": "not_contains",
-          "value": "自检"
-        },
-        {
-          "type": "not_contains",
-          "value": "评分"
-        },
-        {
-          "type": "min_chars",
-          "value": 300
-        },
-        {
-          "type": "starts_with",
-          "value": "## 日语原文"
-        }
-      ]
+        "must_not_contain": [
+          "自检",
+          "评分"
+        ],
+        "must_contain_regex": [],
+        "forbidden_regex": [
+          "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        ],
+        "starts_with": "## 日语原文"
+      },
+      "rubric_ref": "rubrics/dazai.json",
+      "pass_threshold": {
+        "overall": 3.5,
+        "min_dimension": 2
+      }
     }
   ]
 }
