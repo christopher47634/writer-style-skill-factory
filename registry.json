@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "skills": [
+    {
+      "name": "style-akutagawa",
+      "path": "style-akutagawa/SKILL.md",
+      "description": "芥川龍之介の短編から知的皮肉、心理観察、象徴的な具体物、構造的反転の方法を抽出する。芥川的技法を使った原创短編、寓話、心理描写、文章改稿や文風診断を求められたときに使う。",
+      "version": "1.0.0",
+      "evals_dir": "style-akutagawa/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-analysis-framework",
+      "path": "style-analysis-framework/SKILL.md",
+      "description": "作家文风 Skill 元工厂：研究指定作者的原文语料，自动创建、测试、优化和迭代 style-xxx 作家文风 skill，并用子 skill 的真实成稿反馈反向升级工厂自身。用户说“做一个某作家的文风skill”“优化作家skill生成器”“让作家文风更像”“批量生成作者skills”“迭代总作家skill”时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-analysis-framework/evals",
+      "role": "factory"
+    },
+    {
+      "name": "style-dazai",
+      "path": "style-dazai/SKILL.md",
+      "description": "太宰治作品から告白体、自己像と本心のずれ、笑いと悲しみの接近、内省と場面の往復を抽出する。太宰的技法を使った原创小説、随筆、紀行、寓話、改稿や文風診断を求められたときに使う。",
+      "version": "1.0.0",
+      "evals_dir": "style-dazai/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-dostoevsky",
+      "path": "style-dostoevsky/SKILL.md",
+      "description": "提取陀思妥耶夫斯基小说中可迁移的心理冲突、复调对话、危机场景与句式节奏规则。用户要求用这类方法创作小说、独白、审讯式对话、改写场景或诊断文风时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-dostoevsky/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-fitzgerald",
+      "path": "style-fitzgerald/SKILL.md",
+      "description": "Extracts transferable techniques from The Great Gatsby: lyrical sensory precision, recurring symbols, retrospective participant-observer narration, social judgment, and elegiac endings. Use for original fiction, reflective prose, scene rewrites, or style diagnosis requesting Fitzgerald-like craft.",
+      "version": "1.0.0",
+      "evals_dir": "style-fitzgerald/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-gorky",
+      "path": "style-gorky/SKILL.md",
+      "description": "提取高尔基作品中见证者立场、社会现实主义、阶级化人物声音、物质细节和有代价的希望。用户要求创作或改写社会现实题材、劳动者叙事、成长回忆或进行文风诊断时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-gorky/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-kafka",
+      "path": "style-kafka/SKILL.md",
+      "description": "提取卡夫卡德语作品中冷静叙述不可能事件、规则化困境、身体与空间压迫、程序递进等可迁移方法。用户要求创作荒诞小说、制度困境场景、冷处理改写或诊断卡夫卡式文风时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-kafka/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-luxun",
+      "path": "style-luxun/SKILL.md",
+      "description": "提取鲁迅小说、杂文、散文和散文诗中的冷峻反讽、文白张力、对照结构、具体细节承载批判等方法。用户要求原创杂文、讽刺评论、小说片段、改写或鲁迅文风诊断时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-luxun/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-nanfang-zhoumo",
+      "path": "style-nanfang-zhoumo/SKILL.md",
+      "description": "提取南方周末深度报道与人物特稿中的场景切入、人物推进、多源材料和克制判断。用户要求写人物特稿、调查或解释性报道、非虚构改写、报道结构设计或文风诊断时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-nanfang-zhoumo/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-renmin-ribao",
+      "path": "style-renmin-ribao/SKILL.md",
+      "description": "提取人民日报评论类文章中的政策解读、总分总论证、建设性批评、排比和四字格控制。用户要求撰写或改写政策评论、理论短文、群众叙事、政论表达或诊断相关文风时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-renmin-ribao/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-schopenhauer",
+      "path": "style-schopenhauer/SKILL.md",
+      "description": "提取叔本华格言式哲学散文中的命题先行、分号论证、日常类比、诊断语气和收束格言。用户要求写哲学随笔、文化批评、思想评论、书评、改写或诊断叔本华式论证文风时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-schopenhauer/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-soseki",
+      "path": "style-soseki/SKILL.md",
+      "description": "夏目漱石4作品から、知的な語り、場面と省察の往復、社会風刺、景物による感情表現を抽出する。漱石的技法を使った原创小説、随筆、紀行、風刺、改稿や文風診断を求められたときに使う。",
+      "version": "1.0.0",
+      "evals_dir": "style-soseki/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-tanizaki",
+      "path": "style-tanizaki/SKILL.md",
+      "description": "谷崎潤一郎の初期・中期短編から、感覚の焦点、欲望と羞恥、親密な視点、会話の駆け引き、現実と幻想の揺れを抽出する。原创小説、感覚描写、関係劇、改稿や文風診断を求められたときに使う。",
+      "version": "1.0.0",
+      "evals_dir": "style-tanizaki/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-thepaper",
+      "path": "style-thepaper/SKILL.md",
+      "description": "提取澎湃新闻解释性报道和专业报道中的问题链、多源材料、政策与行业分析、克制风险提示。用户要求写或改写解释性新闻、行业报道、专业评论、报道结构或诊断相关文风时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-thepaper/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-tolstoy",
+      "path": "style-tolstoy/SKILL.md",
+      "description": "Extracts transferable narrative craft from English translations of War and Peace and Anna Karenina: social scenes, free indirect discourse, bodily truth, multiple scales, and accumulated characterization. Use for original fiction, scene rewrites, historical narrative, or Tolstoy-style diagnosis.",
+      "version": "1.0.0",
+      "evals_dir": "style-tolstoy/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-xiaoyuehan-kehan",
+      "path": "style-xiaoyuehan-kehan/SKILL.md",
+      "description": "提取小约翰可汗内容中的复杂知识故事化、反常识设问、因果链拆解和严肃幽默交替，不复用个人梗。用户要求写历史或国际政治口播、幽默知识解说、改稿或诊断相关叙事方法时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-xiaoyuehan-kehan/evals",
+      "role": "writer"
+    },
+    {
+      "name": "style-xinhua",
+      "path": "style-xinhua/SKILL.md",
+      "description": "提取新华社消息、通讯、解释性报道和数据稿中的5W1H导语、倒金字塔、规范引述与精确信息组织。用户要求写或改写新闻通稿、权威信息稿、数据稿、报道结构或诊断相关文风时使用。",
+      "version": "1.0.0",
+      "evals_dir": "style-xinhua/evals",
+      "role": "writer"
+    },
+    {
+      "name": "writer-style-guide",
+      "path": "writer-style-guide/SKILL.md",
+      "description": "作家文风系统总入口。自动把“用某作家文风写文章”路由到对应 style-xxx 子 skill；把“创建、优化、批量生成、迭代作家文风skill或总作家skill”路由到 style-analysis-framework 母工厂。用户直接提到作家文风、作者skill、总作家skill或文风迭代时使用。",
+      "version": "1.0.0",
+      "evals_dir": "writer-style-guide/evals",
+      "role": "router"
+    }
+  ]
+}
