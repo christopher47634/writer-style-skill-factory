@@ -287,7 +287,7 @@ The mother factory will:
 1. Research the author's original-language corpus
 2. Extract 4-8 distinguishing mechanisms
 3. Generate a complete `style-<author>/SKILL.md`
-4. Create `test-prompts.json` with 15-30 test prompts
+4. Create `evals/evals.json` test cases and a `rubrics/<author>.json` rubric
 5. Run blind evaluation against no-skill baseline
 6. Deliver the finished skill
 
@@ -345,16 +345,18 @@ This: ✅
 Run the built-in validator to check all skills:
 
 ```bash
-python3 validate.py
+python3 validate.py --static --strict        # free, deterministic, runs in CI
+python3 validate.py --static --strict --json # machine-readable report
+python3 evaluate.py --skill style-luxun --tier smoke --dry-run   # behaviour eval plan, no model calls
 ```
 
 ```
-============================================================
-RESULTS: 341 passed, 0 failed, 5 warnings
-============================================================
+检查 18 个 skill：0 个错误，0 个警告（strict），退出码 0
 ```
 
-Checks: frontmatter structure, name/description fields, UTF-8 encoding, BOM detection, line count limits, test prompt validity, section presence, security (no secrets/keys/logs).
+Static checks: YAML frontmatter (CRLF-safe), contract consistency (examples must not break their own bans, prompts must not ask for self-check output), source and quote-limit declarations for contemporary samples, rubrics, registry sync, trigger routing, security scan. Exit codes: `0` clean, `1` warnings with `--strict`, `2` errors.
+
+`evaluate.py` is the behaviour layer: it generates with the skill, checks each `output_contract` mechanically, then has a judge from a different model family score the draft blind against `rubrics/<author>.json` (3 runs, median). It only runs on demand or on the weekly schedule. See `docs/EVALS.md`.
 
 ---
 
@@ -380,16 +382,15 @@ writer-style-skill-factory/
 │
 ├── writer-style-guide/                     # 🚪 Entry Point
 │   ├── SKILL.md                            #    Routing rules + author alias table
-│   └── test-prompts.json                   #    5 routing test prompts
+│   └── evals/evals.json                    #    Routing test cases
 │
 ├── style-analysis-framework/               # 🏭 Mother Factory
 │   ├── SKILL.md                            #    9-phase creation/iteration framework
-│   ├── test-prompts.json                   #    5 framework test prompts
-│   └── results.tsv                         #    Iteration history log
+│   └── evals/evals.json                    #    Framework test cases
 │
 ├── style-akutagawa/                        # ✍️ Author Skills (×16)
 │   ├── SKILL.md                            #    9-section skill (≤500 lines)
-│   └── test-prompts.json                   #    3+ test prompts
+│   └── evals/evals.json                    #    Machine-checkable test cases
 ├── style-dazai/
 │   └── ...
 ├── style-dostoevsky/
@@ -407,7 +408,10 @@ writer-style-skill-factory/
 ├── style-xiaoyuehan-kehan/
 ├── style-xinhua/
 │
-├── validate.py                             # Automated validation script
+├── shared/protocol.md                      # Protocol shared by all author skills
+├── rubrics/                                # Judge rubrics (1-5 anchors per dimension)
+├── validate.py                             # Static validation (--static --strict --json)
+├── evaluate.py                             # Behaviour eval with LLM judge (on demand)
 ├── README.md                               # This file
 └── .gitignore                              # Excludes secrets, cache, logs
 ```
@@ -435,29 +439,13 @@ mkdir style-<author>
 
 2. Write `SKILL.md` following the 9-section structure defined in `style-analysis-framework/SKILL.md`
 
-3. Create `test-prompts.json`:
-```json
-[
-  {
-    "prompt": "Write a short scene about...",
-    "genre": "fiction",
-    "typicality": "typical",
-    "language": "bilingual"
-  },
-  {
-    "prompt": "Describe a modern city street...",
-    "genre": "essay",
-    "typicality": "non-typical",
-    "language": "bilingual"
-  }
-]
-```
+3. Create `evals/evals.json` and `rubrics/<author>.json` (schema in `docs/EVALS.md`)
 
 4. Register the alias in `writer-style-guide/SKILL.md`
 
 5. Validate:
 ```bash
-python3 validate.py
+python3 validate.py --static --strict
 ```
 
 ---

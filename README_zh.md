@@ -337,16 +337,18 @@ hermes skills install ./style-analysis-framework
 ## 校验
 
 ```bash
-python3 validate.py
+python3 validate.py --static --strict        # 免费、确定性，CI 必跑
+python3 validate.py --static --strict --json # 输出 JSON 报告
+python3 evaluate.py --skill style-luxun --tier smoke --dry-run   # 行为评测计划，不调用模型
 ```
 
 ```
-============================================================
-RESULTS: 341 passed, 0 failed, 5 warnings
-============================================================
+检查 18 个 skill：0 个错误，0 个警告（strict），退出码 0
 ```
 
-检查项：frontmatter 结构、name/description 字段、UTF-8 编码、BOM 检测、行数限制、测试题有效性、章节完整性、安全（无密钥/日志/缓存）。
+静态检查：YAML frontmatter（兼容 CRLF）、契约一致性（示例不得违反自己的禁止项、生成提示不得要求输出自检）、当代样本的来源与引文上限声明、rubric、registry 同步、触发路由、安全扫描。退出码：`0` 通过，`1` strict 下有警告，`2` 有错误。
+
+`evaluate.py` 是行为评测层：带 skill 生成成稿，先机检 `output_contract`，再由不同家族的 judge 模型只看成稿和 `rubrics/<author>.json` 盲评（跑 3 次取中位数）。只在手动触发或每周定时运行，详见 `docs/EVALS.md`。
 
 ---
 
@@ -364,9 +366,9 @@ RESULTS: 341 passed, 0 failed, 5 warnings
 
 1. 创建目录：`mkdir style-<author>`
 2. 按 `style-analysis-framework/SKILL.md` 中定义的 9 段结构写 `SKILL.md`
-3. 创建 `test-prompts.json`（至少 3 个测试题）
+3. 创建 `evals/evals.json` 测试用例和 `rubrics/<author>.json` 评分标准（格式见 `docs/EVALS.md`）
 4. 在 `writer-style-guide/SKILL.md` 注册别名
-5. 运行校验：`python3 validate.py`
+5. 运行校验：`python3 validate.py --static --strict`
 
 ---
 

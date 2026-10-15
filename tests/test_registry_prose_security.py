@@ -115,3 +115,13 @@ def test_security_empty_dir_fails(tmp_path):
 
 def test_real_repo_clean(repo):
     assert ss.main(["--root", repo]) == 0
+
+
+def test_security_private_paths_and_sensitive_names(tmp_path):
+    sample = "data in /mnt/c/" + "Users/x/ and E:" + chr(92) + "Downloads" + chr(92) + "a"
+    rules = {r for _, r, _, _ in ss.scan_text(sample)}
+    assert "private-path" in rules
+    assert ss.scan_text("relative/path and $HOME/x") == []
+    (tmp_path / "ok.md").write_text("hello", encoding="utf-8")
+    (tmp_path / ".env").write_text("A=1", encoding="utf-8")
+    assert ss.main(["--root", str(tmp_path)]) == 1

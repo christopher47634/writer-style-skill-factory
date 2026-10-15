@@ -12,10 +12,13 @@ validator.
 ## Layout
 
 ```
-style-analysis-framework/   # analysis framework: SKILL.md, results.tsv, test-prompts.json
+style-analysis-framework/   # analysis framework: SKILL.md, evals/evals.json
 writer-style-guide/         # writer style guide skill
 style-<author>/             # 16 per-author style skills (e.g. style-kafka, style-luxun)
-validate.py                 # validator (pure Python 3, no deps)
+shared/protocol.md          # protocol shared by every author skill
+rubrics/                    # per-skill judge rubrics (1-5 anchors)
+validate.py                 # static validator (pure Python 3, no deps)
+evaluate.py                 # behaviour eval (calls models, on demand)
 assets/                     # images (banner, logo, concept, architecture)
 .github/                    # PR and issue templates
 ```
@@ -35,20 +38,11 @@ There are no dependencies to install.
 python3 validate.py
 ```
 
-For every skill directory the validator checks:
-
-- `SKILL.md` and `test-prompts.json` exist;
-- `test-prompts.json` is a valid JSON array containing at least one prompt;
-- `SKILL.md` contains the required sections (the validator accepts any listed
-  variant):
-  - 硬输出契约 / 硬輸出契約 / Hard Output Contract
-  - 反模式 / Anti-Pattern
-  - 语料 / corpus / Corpus
-
-It then runs a Security & Cleanup check.
-
-Current `main` result: `341 passed, 0 failed, 5 warnings`. Warnings are advisory
-and do not block merging.
+`validate.py --static --strict` runs every free layer in one go (structure,
+frontmatter parsed as YAML with CRLF support, contract consistency, sources,
+rubrics, registry, trigger routing, security scan) and exits `0` when clean,
+`1` on warnings under `--strict`, `2` on errors. Add `--json` for a
+machine-readable report. CI runs it with `--strict`, so warnings block merging.
 
 ## Free-tier checks (also run in CI)
 
@@ -78,16 +72,16 @@ queries in `evals/routing.json`, and an entry in `registry.json`
    Model it on an existing skill (e.g. `style-kafka/` or `style-luxun/`) so
    formatting stays consistent.
 
-3. Create `style-<author>/test-prompts.json` — a valid JSON array with at least
-   one prompt string that exercises the skill.
+3. Create `style-<author>/evals/evals.json` (schema in `docs/EVALS.md`: `tier`,
+   `output_contract`, `rubric_ref`, `pass_threshold`) and `rubrics/<author>.json`.
 
 4. Validate:
 
    ```sh
-   python3 validate.py
+   python3 validate.py --static --strict
    ```
 
-   Ensure `0 failed`.
+   Ensure the exit code is `0`.
 
 5. Keep the change scoped to the new skill directory unless a shared file
    (`style-analysis-framework/`, `writer-style-guide/`) genuinely needs updating.
@@ -98,11 +92,11 @@ queries in `evals/routing.json`, and an entry in `registry.json`
 2. Commit: `git add style-<author> && git commit -m "feat: add <author> style skill"`
 3. Push and open a PR using the PR template:
    `git push -u origin feat/add-style-<author>`
-4. Fill in the template: summary, changes, and the output of `python3 validate.py`.
+4. Fill in the template: summary, changes, and the output of `python3 validate.py --static --strict`.
 
 ### Checklist before submitting
 
-- [ ] `python3 validate.py` reports `0 failed`
+- [ ] `python3 validate.py --static --strict` exits `0`
 - [ ] Changes are scoped; no edits to READMEs, LICENSE, `assets/`, or unrelated files
 - [ ] No secrets or tokens in the diff
 - [ ] No generated media or temporary files committed (`frames/`, `tts/`,
