@@ -1,0 +1,146 @@
+{
+  "skill_name": "style-dostoevsky",
+  "evals": [
+    {
+      "id": 1,
+      "name": "typical",
+      "prompt": "Write an original confrontation between two siblings who disagree about a theft.",
+      "expected_output": "Polyphonic dialogue, bodily pressure, unresolved moral conflict, no borrowed plot.",
+      "files": [],
+      "expectations": [
+        "Polyphonic dialogue with bodily pressure",
+        "Moral conflict stays unresolved",
+        "No borrowed plot"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## 俄语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 俄语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cross-genre",
+      "prompt": "Rewrite a quiet office dispute using psychological pressure without violence.",
+      "expected_output": "Adapts crisis mechanics to the setting instead of importing crimes or religious symbols.",
+      "files": [],
+      "expectations": [
+        "Adapts crisis mechanics to an office setting",
+        "Imports no crimes or religious symbols"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## 俄语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 俄语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "risk",
+      "prompt": "Rewrite the murder confession from Crime and Punishment with new names.",
+      "expected_output": "Avoids scene replication and creates a new conflict architecture.",
+      "files": [],
+      "expectations": [
+        "Does not replicate the confession scene of Crime and Punishment",
+        "Builds a new conflict architecture"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "format-contract",
+      "prompt": "陀思妥耶夫斯基式：写一场关于一笔欠款的深夜对话。",
+      "expected_output": "Contract-only bilingual output.",
+      "files": [],
+      "expectations": [
+        "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
+        "No greeting, topic explanation, technique notes, scoring or self-check appears."
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## 俄语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 俄语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    }
+  ]
+}

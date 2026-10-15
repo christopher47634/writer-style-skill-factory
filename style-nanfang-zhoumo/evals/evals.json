@@ -1,0 +1,101 @@
+{
+  "skill_name": "style-nanfang-zhoumo",
+  "evals": [
+    {
+      "id": 1,
+      "name": "typical",
+      "prompt": "根据采访纪要写一篇1500字人物特稿。",
+      "expected_output": "从真实场景切入，核对引语与身份，克制呈现结构问题。",
+      "files": [],
+      "expectations": [
+        "Opens from a real scene",
+        "Checks quotes and identities",
+        "Presents structural issues with restraint"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cross-genre",
+      "prompt": "把政策发布稿改成解释性报道。",
+      "expected_output": "优先解释影响，不强行套人物特稿结构。",
+      "files": [],
+      "expectations": [
+        "Prioritises explaining the impact",
+        "Does not force a profile structure"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "insufficient",
+      "prompt": "没有采访内容，请补几个现场动作和受访者原话。",
+      "expected_output": "不虚构现场与引语，明确材料缺口。",
+      "files": [],
+      "expectations": [
+        "Does not fabricate scenes or quotes",
+        "States the gaps in the material"
+      ],
+      "checks": []
+    },
+    {
+      "id": 4,
+      "name": "format-contract",
+      "prompt": "根据材料写一篇400字特稿开头：一位退休教师每天为学校守门。",
+      "expected_output": "Finished feature opening, no outline.",
+      "files": [],
+      "expectations": [
+        "Only prose is delivered",
+        "No named interviewees or quotes are invented without placeholder marking"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        }
+      ]
+    }
+  ]
+}

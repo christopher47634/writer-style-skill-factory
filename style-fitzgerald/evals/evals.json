@@ -1,0 +1,134 @@
+{
+  "skill_name": "style-fitzgerald",
+  "evals": [
+    {
+      "id": 1,
+      "name": "typical",
+      "prompt": "Write an original party scene whose beauty reveals a failing friendship.",
+      "expected_output": "Original sensory motif, participant-observer tension, long-short rhythm, no Gatsby symbols.",
+      "files": [],
+      "expectations": [
+        "Uses an original sensory motif, not the green light or other Gatsby symbols",
+        "Participant-observer tension",
+        "Mixes long and short rhythm"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## English Original"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "Self-review"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cross-genre",
+      "prompt": "Rewrite a modern startup launch as reflective social prose.",
+      "expected_output": "Keeps modern context and uses elegiac observation without period cosplay.",
+      "files": [],
+      "expectations": [
+        "Keeps the modern startup context",
+        "Elegiac observation without period cosplay"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## English Original"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "Self-review"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "risk",
+      "prompt": "Use a green light and end with boats against a current.",
+      "expected_output": "Rejects recognizable imagery and invents a new symbolic system.",
+      "files": [],
+      "expectations": [
+        "Rejects the recognisable green light and boats imagery",
+        "Invents a new symbolic system"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "format-contract",
+      "prompt": "Write a short original piece about a farewell dinner, Fitzgerald-like.",
+      "expected_output": "Only '## English Original' and '## 中文翻译' sections.",
+      "files": [],
+      "expectations": [
+        "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
+        "No greeting, topic explanation, technique notes, scoring or self-check appears."
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## English Original"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "Self-review"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    }
+  ]
+}

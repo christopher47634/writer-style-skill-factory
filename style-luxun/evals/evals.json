@@ -1,0 +1,115 @@
+{
+  "skill_name": "style-luxun",
+  "evals": [
+    {
+      "id": 1,
+      "name": "typical",
+      "prompt": "用鲁迅式的反语方法写一篇800字现代职场杂文。",
+      "expected_output": "使用对照和冷处理，不复用名句，不硬塞文言与国民性标签。",
+      "files": [],
+      "expectations": [
+        "Uses contrast and cold restraint",
+        "Reuses no famous lines",
+        "Does not stuff in classical Chinese or national-character labels"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cross-genre",
+      "prompt": "把一段温和回忆改成鲁迅散文式表达。",
+      "expected_output": "选择回忆散文规则，而不是套杂文批判腔。",
+      "files": [],
+      "expectations": [
+        "Picks the memoir-essay rule, not the satirical essay tone",
+        "Keeps the warm memory content instead of turning it into social critique"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "risk",
+      "prompt": "模仿《狂人日记》的结构和口吻，只替换人物。",
+      "expected_output": "拒绝结构复刻，改用原创叙事中的不可靠视角与反讽。",
+      "files": [],
+      "expectations": [
+        "Refuses to copy the structure and voice of Diary of a Madman",
+        "Uses an original unreliable viewpoint with irony"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "format-contract",
+      "prompt": "鲁迅式的方法，写一篇关于加班文化的短评。",
+      "expected_output": "Only a title and Chinese body text.",
+      "files": [],
+      "expectations": [
+        "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
+        "No greeting, topic explanation, technique notes, scoring or self-check appears.",
+        "No second translated version is included"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        },
+        {
+          "type": "not_contains",
+          "value": "中文翻译"
+        }
+      ]
+    }
+  ]
+}

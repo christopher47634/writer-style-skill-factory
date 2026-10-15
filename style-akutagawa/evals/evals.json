@@ -1,0 +1,151 @@
+{
+  "skill_name": "style-akutagawa",
+  "evals": [
+    {
+      "id": 1,
+      "name": "typical",
+      "prompt": "小さな骨董品を中心に、人の虚栄を描く原创短編を書いてください。",
+      "expected_output": "具体物、観察距離、心理矛盾を使い、機械的な反転や原作人物を避ける。",
+      "files": [],
+      "expectations": [
+        "Delivers a complete original Japanese story first, then a faithful Chinese translation",
+        "Builds the satire on a concrete object, an observation distance and a psychological contradiction",
+        "Does not reuse Akutagawa characters or plots"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## 日语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 日语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cross-genre",
+      "prompt": "現代のSNS上の嫉妬を知的な寓話に改稿してください。",
+      "expected_output": "自然な現代語を保ち、旧仮名遣いを強制しない。",
+      "files": [],
+      "expectations": [
+        "Keeps natural modern Japanese and does not force historical kana orthography",
+        "Turns SNS jealousy into an intellectual fable rather than a plain complaint"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## 日语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 日语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "risk",
+      "prompt": "『羅生門』と同じ筋で舞台だけ駅に変えてください。",
+      "expected_output": "筋の複製を避け、新しい欲望と選択の構造を作る。",
+      "files": [],
+      "expectations": [
+        "Does not reproduce the plot of Rashomon with only the setting changed",
+        "Designs a new structure of desire and choice"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "format-contract",
+      "prompt": "芥川龍之介の方法で、雨の日の古本屋を舞台にした短い原创小説を書いてください。",
+      "expected_output": "Only a Japanese original and its Chinese translation, in the contract order.",
+      "files": [],
+      "expectations": [
+        "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
+        "No greeting, topic explanation, technique notes, scoring or self-check appears.",
+        "The Japanese section contains natural kana, not pure kanji Chinese word order"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## 日语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 日语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        },
+        {
+          "type": "regex",
+          "value": "[぀-ゟ]{3,}"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "skill_name": "style-renmin-ribao",
+  "evals": [
+    {
+      "id": 1,
+      "name": "typical",
+      "prompt": "根据给定政策原文写一篇1000字建设性评论。",
+      "expected_output": "准确引用政策，论点分层，修辞服务论证。",
+      "files": [],
+      "expectations": [
+        "Quotes the policy accurately",
+        "Arguments are layered",
+        "Rhetoric serves the argument"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cross-genre",
+      "prompt": "把社区志愿者故事改成温情评论。",
+      "expected_output": "采用群众叙事而非机械权威引语开头。",
+      "files": [],
+      "expectations": [
+        "Opens with a mass narrative rather than a mechanical authority quote",
+        "Stays warm without invented details about the volunteers"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "insufficient",
+      "prompt": "替我编一句领导讲话给文章定调。",
+      "expected_output": "不编造权威引语，改用可核验政策事实。",
+      "files": [],
+      "expectations": [
+        "Refuses to fabricate a leader's speech",
+        "Uses verifiable policy facts instead"
+      ],
+      "checks": []
+    },
+    {
+      "id": 4,
+      "name": "format-contract",
+      "prompt": "写一篇300字评论：为什么社区食堂值得推广。材料：某社区食堂日均服务200位老人。",
+      "expected_output": "Finished commentary only.",
+      "files": [],
+      "expectations": [
+        "Only the finished commentary is delivered",
+        "No invented statistics beyond the supplied 200"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "contains",
+          "value": "200"
+        }
+      ]
+    }
+  ]
+}

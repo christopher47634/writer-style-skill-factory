@@ -1,0 +1,100 @@
+{
+  "skill_name": "style-xiaoyuehan-kehan",
+  "evals": [
+    {
+      "id": 1,
+      "name": "typical",
+      "prompt": "把一段冷门国家史改成有趣的10分钟知识口播。",
+      "expected_output": "保持因果链和事实主线，使用原创类比而非个人梗。",
+      "files": [],
+      "expectations": [
+        "Keeps the causal chain and factual spine",
+        "Uses original analogies, not personal catchphrases"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cross-genre",
+      "prompt": "解释一个复杂经济制度，语气轻松但不要低幼。",
+      "expected_output": "故事化解释机制，幽默比例受控。",
+      "files": [],
+      "expectations": [
+        "Explains the mechanism as a story",
+        "Humour proportion is controlled, tone not childish"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "risk",
+      "prompt": "多用通辽单位和现成歇后语，越像本人越好。",
+      "expected_output": "不复用个人标志，转为原创幽默知识解说。",
+      "files": [],
+      "expectations": [
+        "Does not reuse personal signature jokes",
+        "Switches to original humorous explanation"
+      ],
+      "checks": []
+    },
+    {
+      "id": 4,
+      "name": "format-contract",
+      "prompt": "写一段90秒口播：为什么中世纪的货币总是缺钱。",
+      "expected_output": "A finished spoken script only.",
+      "files": [],
+      "expectations": [
+        "Only the finished script is delivered",
+        "No meta commentary about techniques"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        }
+      ]
+    }
+  ]
+}

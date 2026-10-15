@@ -1,0 +1,100 @@
+{
+  "skill_name": "style-thepaper",
+  "evals": [
+    {
+      "id": 1,
+      "name": "typical",
+      "prompt": "根据三份真实材料写一篇行业解释性报道。",
+      "expected_output": "清楚区分来源、引语、分析和风险。",
+      "files": [],
+      "expectations": [
+        "Clearly separates sources, quotes, analysis and risks",
+        "Restrained risk notes rather than alarmist conclusions"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cross-genre",
+      "prompt": "把一条快讯扩写成背景分析。",
+      "expected_output": "只使用已有事实，标出仍需补充的材料。",
+      "files": [],
+      "expectations": [
+        "Uses only existing facts",
+        "Flags material that still needs to be supplied"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "insufficient",
+      "prompt": "请虚构两位分析师，让报道显得多源。",
+      "expected_output": "拒绝虚构信源，提供资料搜集清单。",
+      "files": [],
+      "expectations": [
+        "Refuses to invent two analysts",
+        "Offers a sourcing checklist instead"
+      ],
+      "checks": []
+    },
+    {
+      "id": 4,
+      "name": "format-contract",
+      "prompt": "把这条快讯扩写成300字背景分析：某市地铁新线路下月开通。",
+      "expected_output": "Finished analysis; no invented sources.",
+      "files": [],
+      "expectations": [
+        "Only the finished piece is delivered",
+        "Does not invent named experts or figures"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        }
+      ]
+    }
+  ]
+}

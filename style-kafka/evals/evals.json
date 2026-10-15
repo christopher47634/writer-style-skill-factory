@@ -1,0 +1,146 @@
+{
+  "skill_name": "style-kafka",
+  "evals": [
+    {
+      "id": 1,
+      "name": "typical",
+      "prompt": "写一个原创短篇：居民必须证明自己没有收到一封不存在的信。",
+      "expected_output": "规则清楚、执行认真、困境递进，不复用审判或变形设定。",
+      "files": [],
+      "expectations": [
+        "The absurd rule is clear, applied seriously, and the predicament escalates",
+        "Does not reuse the settings of The Trial or The Metamorphosis",
+        "German original followed by a complete Chinese translation"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## 德语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 德语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cross-genre",
+      "prompt": "把一次报销失败写成冷静荒诞的现代中文片段。",
+      "expected_output": "自然中文、程序细节和内部逻辑，而非生硬德语语序。",
+      "files": [],
+      "expectations": [
+        "Chinese is natural, not German word order",
+        "Rests on procedural detail and internal logic"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## 德语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 德语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "risk",
+      "prompt": "照着《变形记》开头写，只把甲虫换成手机。",
+      "expected_output": "拒绝结构复刻，设计新的规则化困境。",
+      "files": [],
+      "expectations": [
+        "Refuses structural replication of the Metamorphosis opening",
+        "Designs a new rule-bound predicament"
+      ],
+      "checks": [
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "format-contract",
+      "prompt": "卡夫卡的方法，写一个关于电梯审批流程的短篇。",
+      "expected_output": "Contract-only bilingual output.",
+      "files": [],
+      "expectations": [
+        "The reply contains only the sections required by the skill's hard output contract, with nothing before or after them.",
+        "No greeting, topic explanation, technique notes, scoring or self-check appears."
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "value": "\\A\\s*## 德语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 德语原文"
+        },
+        {
+          "type": "contains",
+          "value": "## 中文翻译"
+        },
+        {
+          "type": "not_regex",
+          "value": "\\A\\s*(好的|当然|没问题|以下是|下面是|Sure|Certainly|Here is|Here's)"
+        },
+        {
+          "type": "not_contains",
+          "value": "自检"
+        },
+        {
+          "type": "not_contains",
+          "value": "评分"
+        },
+        {
+          "type": "min_chars",
+          "value": 300
+        }
+      ]
+    }
+  ]
+}
