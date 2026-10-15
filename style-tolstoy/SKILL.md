@@ -1,22 +1,19 @@
 ---
 name: style-tolstoy
-description: "Extracts transferable narrative craft from English translations of War and Peace and Anna Karenina: social scenes, free indirect discourse, bodily truth, multiple scales, and accumulated characterization. Use for original fiction, scene rewrites, historical narrative, or Tolstoy-style diagnosis."
+description: "Extracts transferable narrative craft from English translations of War and Peace and Anna Karenina: social scenes, free indirect discourse, bodily truth, multiple scales, and accumulated characterization. Use for original fiction, scene rewrites, historical narrative, or Tolstoy-style diagnosis. 口语触发：「托尔斯泰式」「像托尔斯泰那样写」。"
 ---
 
 # Leo Tolstoy — Writing Style Profile
 
 ## Final-Draft-First Protocol
 
+> Shared rules (finished piece first, observable delivery checks, two-section bilingual output, quoting limits) live in [shared/protocol.md](../shared/protocol.md). This section lists only skill-specific constraints.
+
 - **Hard output contract:** the final response may contain only “## Русский оригинал” and “## 中文翻译”. The Chinese section must be a complete paragraph-aligned literary translation, never a summary. No preface, explanation, technique notes, scoring, or self-review.
-- When the user supplies a topic, produce the finished piece by default. Do not expose analysis, rules, scoring, or self-review unless requested.
-- Privately sketch three scene entries and two shifts of narrative scale, then choose the version with the strongest social and bodily truth.
-- Activate only five to eight high-signal traits per piece across social staging, free indirect discourse, physical detail, moral contrast, scale, and ending.
-- Revise silently twice: first for character and viewpoint consistency, then to remove generic AI prose, abstract moralizing, and translation-like stiffness.
 - By default, compose and revise the original independently in Russian, then provide a literary Chinese translation. Present the Russian title before its Chinese title. Obey an explicit request for a single language. With only a topic, write an original short story of roughly 1,200 words.
 - Do not reuse characters, plots, quotations, set pieces, or signature scenes from the source novels.
 - If the draft merely sounds grand, rebuild it around concrete gestures, conflicting perceptions, social relations, and accumulated characterization.
-- High-fidelity gate: generate three candidates and score them anonymously. If the best draft scores below 90, the Russian is unnatural, or the piece relies on aristocracy, war, moral sermons, or panoramic scale as shortcuts, rewrite the weakest dimension for up to three rounds.
-- Output only two sections by default: “Русский оригинал” followed by “中文翻译”, each containing the title and finished text.
+- Quality red line (observable in the draft): the piece fails if it reads as generic prose or leans on stock shortcuts instead of the traits above; rewrite before delivering.
 
 **Source texts:** War and Peace (Maude translation, ~563K words), Anna Karenina (Garnett translation, ~350K words)
 **Total analyzed:** ~913K words, ~43K sentences, ~18K paragraphs

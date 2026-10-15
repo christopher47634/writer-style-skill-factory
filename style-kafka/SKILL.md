@@ -1,22 +1,19 @@
 ---
 name: style-kafka
-description: "提取卡夫卡德语作品中冷静叙述不可能事件、规则化困境、身体与空间压迫、程序递进等可迁移方法。用户要求创作荒诞小说、制度困境场景、冷处理改写或诊断卡夫卡式文风时使用。"
+description: "提取卡夫卡德语作品中冷静叙述不可能事件、规则化困境、身体与空间压迫、程序递进等可迁移方法。用户要求创作荒诞小说、制度困境场景、冷处理改写或诊断卡夫卡式文风时使用。 口语触发：「像卡夫卡」「卡夫卡式」「写个卡夫卡风的故事」。"
 ---
 
 # Franz Kafka — 文风分析9层框架
 
 ## 成稿优先协议
 
+> 通用规则（直接成稿、可观察交付检查、双语两段式、引用与版权）见 [shared/protocol.md](../shared/protocol.md)。本节只列本 skill 的专属约束。
+
 - **硬输出契约**：最终只能包含“## 德语原文”和“## 中文翻译”两部分；中文必须逐段完整翻译德语原文。禁止寒暄、摘要、大意、技法说明、评分和自检。交付前扫描德语正文，不得混入乱码或不自然回译。
-- 用户给出主题后，默认直接生成完整作品；未要求时不输出九层分析、规则清单、评分或自检。
-- 内部先设计 3 条荒诞规则和 2 种困境升级链，选择逻辑最清楚、结果最荒谬的一组。
-- 每篇只激活 5-8 个高辨识度特征，覆盖异常开头、程序递进、身体感知、空间压迫、句法和冷处理结尾。
-- 初稿后静默修订两轮：先检查困境是否逐步升级，再删除随机怪事、通用 AI 腔和生硬德语语序。
 - 默认先用德语独立完成并修订原文，再给出中文文学翻译；标题同样按“德语原题 → 中文题名”排列。用户明确要求单一语言时服从用户。只给主题时，生成约 1000 字的原创荒诞短篇。
 - 不复用变形、审判、城堡等原作设定，不复用人物、名句和场景骨架。
 - 若文本只是晦涩或怪异，则明确规则、人物目标与每次失败的因果关系后重写。
-- 高保真门槛：内部生成 3 个候选并匿名评分；总分低于 90、德语不自然，或只靠官僚、怪事、房间和无解结尾制造辨识度时，针对最低维度重写，最多 3 轮。
-- 默认输出依次为“德语原文”和“中文翻译”，只包含标题与正文。
+- 质量红线（可从成稿直接观察）：成稿若德语不自然，或只靠官僚、怪事、房间和无解结尾制造辨识度，视为不合格，交付前须重写。
 
 > 版本：1.0。语料：Die Verwandlung、Ein Landarzt: Kleine Erzählungen、Betrachtung；德语共243,712字符、38,428词、1,752句。
 
@@ -401,7 +398,7 @@ Gregor临死前：
 
 ---
 
-## 反向检查表（生成后自检）
+## 反向检查表（交付前核对，不向用户输出）
 
 ### 必须检查项
 - [ ] 第一句是否有钩子？（异常声明或困境先行）
@@ -422,7 +419,7 @@ Gregor临死前：
 4. **禁止过度嵌套**——Kafka的从句嵌套有其内在逻辑，不能为了复杂而复杂
 5. **禁止无意义的荒诞**——Kafka的荒诞有其内在逻辑，不是随意的
 6. **禁止模仿"卡夫卡式"的表面**——关键是精确和克制，不是晦涩
-7. **禁止使用过时的德语拼写**——如mußte→müssen, daß→dass（除非刻意复古）
+7. **禁止使用旧正字法拼写**——现代德语写 musste、dass、bewusst、wusste、schloss，不写带 ß 的旧拼写（引用 1900 年代原文时除外）
 8. **禁止把Kafka写成恐怖作家**——他写的不是恐怖，是存在的荒诞
 
 ---
@@ -438,8 +435,8 @@ Gregor临死前：
 6. 词语：身体词+空间词+否定词+模态词
 7. 情绪：禁止直接命名，用身体/空间暗示
 8. 结尾：不给答案，留问题或冷处理
-9. 自检：对照检查表逐项检查
-10. 风格评分：目标85+分
+9. 核对：对照检查表确认成稿中可指认的特征（不向用户输出检查过程）
+10. 收束：只交付两段式成稿
 ```
 
 ---
@@ -448,13 +445,13 @@ Gregor临死前：
 
 ### 示例1：开头（规则9+1+2）
 
-> Es war Montagmorgen, und die Maschine hatte aufgehört zu arbeiten. Nicht daß sie kaputt gewesen wäre — die Lampen leuchteten, die Anzeigen zeigten normale Werte, und das Summen, das man seit Jahren nicht mehr bewußt gehört hatte, war immer noch da. Aber etwas hatte sich verändert. Wer sich die Hand auf das Metall legte, spürte nichts mehr.
+> Es war Montagmorgen, und die Maschine hatte aufgehört zu arbeiten. Nicht dass sie kaputt gewesen wäre — die Lampen leuchteten, die Anzeigen zeigten normale Werte, und das Summen, das man seit Jahren nicht mehr bewusst gehört hatte, war immer noch da. Aber etwas hatte sich verändert. Wer sich die Hand auf das Metall legte, spürte nichts mehr.
 
 （规则应用：日常场景→异常声明→身体感知→否定→不解释原因）
 
 ### 示例2：困境推进（规则10+20+22）
 
-> Er versuchte die Tür zu öffnen, aber der Griff bewegte sich nicht. Er versuchte es mit der anderen Hand, drückte stärker, dann schwächer, dann wieder stärker; er versuchte, den Griff nach links und dann nach rechts zu drehen; er versuchte, mit dem Ellenbogen gegen die Tür zu stoßen; aber die Tür blieb geschlossen, und der Griff bewegte sich nicht, und er wußte nicht, warum.
+> Er versuchte die Tür zu öffnen, aber der Griff bewegte sich nicht. Er versuchte es mit der anderen Hand, drückte stärker, dann schwächer, dann wieder stärker; er versuchte, den Griff nach links und dann nach rechts zu drehen; er versuchte, mit dem Ellenbogen gegen die Tür zu stoßen; aber die Tür blieb geschlossen, und der Griff bewegte sich nicht, und er wusste nicht, warum.
 
 （规则应用：尝试→失败→更复杂尝试→仍然失败→aber转折→不知道为什么）
 
@@ -466,7 +463,7 @@ Gregor临死前：
 
 ---
 
-## 文风评分表（适用于Kafka风格生成）
+## 离线评测维度（仅供评测/改稿参考，运行时不得输出评分）
 
 1. 结构适配度：15分——是否采用了适合当前题材的“规则化困境递进”
 2. 叙事质感：15分——是否有极度近景的身体感知
@@ -489,7 +486,7 @@ Gregor临死前：
 
 ### 尝试-失败-否定模式
 ```
-Er versuchte [动作], aber [否定结果]. [更详细的尝试], aber [仍然是否定]. Er wußte nicht [不知道什么].
+Er versuchte [动作], aber [否定结果]. [更详细的尝试], aber [仍然是否定]. Er wusste nicht [不知道什么].
 ```
 > Er versuchte es wohl hundertmal, schloß die Augen, um die zappelnden Beine nicht sehen zu müssen, und ließ erst ab, als er in der Seite einen noch nie gefühlten, leichten, dumpfen Schmerz zu fühlen begann.
 

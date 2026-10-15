@@ -1,22 +1,19 @@
 ---
 name: style-dostoevsky
-description: "提取陀思妥耶夫斯基小说中可迁移的心理冲突、复调对话、危机场景与句式节奏规则。用户要求用这类方法创作小说、独白、审讯式对话、改写场景或诊断文风时使用。"
+description: "提取陀思妥耶夫斯基小说中可迁移的心理冲突、复调对话、危机场景与句式节奏规则。用户要求用这类方法创作小说、独白、审讯式对话、改写场景或诊断文风时使用。 口语触发：「陀氏风格」「写得像陀思妥耶夫斯基」「陀式独白」。"
 ---
 
 # Writing Style Skill: Fyodor Dostoevsky (Фёдор Михайлович Достоевский)
 
 ## 成稿优先协议
 
+> 通用规则（直接成稿、可观察交付检查、双语两段式、引用与版权）见 [shared/protocol.md](../shared/protocol.md)。本节只列本 skill 的专属约束。
+
 - **硬输出契约**：最终只能包含“## 俄语原文”和“## 中文翻译”两部分；中文必须逐段完整翻译俄语原文。禁止寒暄、摘要、大意、技法说明、评分和自检。交付前扫描俄语正文，不得混入乱码或非预期字符。
-- 用户给出主题后，默认直接生成完整作品；未要求时不输出分析、规则、评分或自检。
-- 内部先设计 3 个冲突入口和 2 种危机升级链，选择人物压力最大且主题最清晰的一组。
-- 每篇只激活 5-8 个高辨识度特征，覆盖复调冲突、心理矛盾、身体压力、句式节奏、空间和未解决结尾。
-- 初稿后静默修订两轮：第一轮增强人物声音之间的差异，第二轮删除哲学讲义腔、通用 AI 腔和无功能的歇斯底里。
 - 默认先用俄语独立完成并修订原文，再给出中文文学翻译；标题同样按“俄语原题 → 中文题名”排列。用户明确要求单一语言时服从用户。只给主题时，生成约 1200 字的原创心理冲突短篇。
 - 不复用原作人物、罪行情节、宗教辩论、名句或场景骨架。主题不典型时迁移冲突机制，不搬运题材。
 - 若人物只是在轮流发表观点，则加入行动阻力、隐瞒、误解和相互打断后重写。
-- 高保真门槛：内部生成 3 个候选并匿名评分；总分低于 90、俄语不自然，或只靠犯罪、宗教和歇斯底里制造辨识度时，针对最低维度重写，最多 3 轮。
-- 默认输出依次为“俄语原文”和“中文翻译”，只包含标题与正文。
+- 质量红线（可从成稿直接观察）：成稿若俄语不自然，或只靠犯罪、宗教和歇斯底里制造辨识度，视为不合格，交付前须重写。
 
 **Version 1.1** | **Analytical Foundation: ~207K English words from four translated novels + ~147K Russian words from Crime and Punishment**
 
@@ -575,7 +572,7 @@ should always be pulled forward by the gravitational force of unfinished crisis.
 
 ## Activation Prompt
 
-When writing in the Dostoevsky style, adopt these priorities:
+These priorities govern how the Russian original is written. The output format is fixed by the 硬输出契约 at the top of this file (Russian original, then a complete Chinese translation, nothing else); nothing below overrides it. Adopt these priorities:
 
 1. **Psychology first.** Every sentence should advance the reader's understanding of
    what a character thinks and feels — especially what they think about what they feel.
@@ -594,7 +591,7 @@ When writing in the Dostoevsky style, adopt these priorities:
 3. Build pressure through action, interruption, contradiction, and bodily response.
 4. Use sentence-length variation as a consequence of thought under pressure, not as a quota.
 5. Preserve the user's facts, plot, and intended meaning. Do not import names, crimes, dreams, religious symbols, or situations from the source novels.
-6. Deliver the requested prose first. Add a short craft note only when requested.
+6. Deliver the finished piece in the top-of-file contract format (“## 俄语原文” then “## 中文翻译”). Add a craft note only when the user explicitly asks for diagnosis or analysis, and then use plain analysis instead of the two-section format.
 
 ---
 

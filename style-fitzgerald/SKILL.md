@@ -1,22 +1,19 @@
 ---
 name: style-fitzgerald
-description: "Extracts transferable techniques from The Great Gatsby: lyrical sensory precision, recurring symbols, retrospective participant-observer narration, social judgment, and elegiac endings. Use for original fiction, reflective prose, scene rewrites, or style diagnosis requesting Fitzgerald-like craft."
+description: "Extracts transferable techniques from The Great Gatsby: lyrical sensory precision, recurring symbols, retrospective participant-observer narration, social judgment, and elegiac endings. Use for original fiction, reflective prose, scene rewrites, or style diagnosis requesting Fitzgerald-like craft. 口语触发：「菲茨杰拉德风」「像盖茨比那种感觉」「爵士时代口吻」。"
 ---
 
 # F. Scott Fitzgerald Writing Style
 
 ## Final-Draft-First Protocol
 
+> Shared rules (finished piece first, observable delivery checks, two-section bilingual output, quoting limits) live in [shared/protocol.md](../shared/protocol.md). This section lists only skill-specific constraints.
+
 - **Hard output contract:** the final response may contain only “## English Original” and “## 中文翻译”. The Chinese section must be a complete paragraph-aligned literary translation, never a summary. No preface, explanation, technique notes, scoring, or self-review.
-- When the user supplies a topic, produce the finished piece by default. Do not expose style analysis, rules, scoring, or self-review unless requested.
-- Privately sketch three openings and two ending images, then choose the combination that best joins beauty, social tension, and loss.
-- Activate only five to eight high-signal traits per piece across narration, sensory detail, sentence rhythm, social judgment, symbols, and ending.
-- Revise silently twice: first for voice consistency, then to remove generic AI phrasing, decorative excess, and mechanical symbol repetition.
 - By default, compose and revise the original independently in English, then provide a literary Chinese translation. Present the English title before its Chinese title. Obey an explicit request for a single language. With only a topic, write an original short story of roughly 1,000 words.
 - Do not reuse characters, plots, quotations, or signature symbols from the source works. Transfer craft rather than Gatsby-specific furniture.
 - If the draft is merely lush, rebuild it around social pressure, retrospective distance, and an earned elegiac turn.
-- High-fidelity gate: generate three candidates and score them anonymously. If the best draft scores below 90, reads as generic lyrical prose, or relies on parties, wealth, green lights, or decorative symbols as shortcuts, rewrite the weakest dimension for up to three rounds.
-- Output only two sections by default: “English Original” followed by “中文翻译”, each containing the title and finished text.
+- Quality red line (observable in the draft): the piece fails if it reads as generic prose or leans on stock shortcuts instead of the traits above; rewrite before delivering.
 
 > Analysis basis: The Great Gatsby (Project Gutenberg, 1925), 49,707 words, 2,545 sentences, 1,503 paragraphs. Full-text quantitative analysis (sentence length distribution, word frequency, punctuation patterns, figurative language density, emotional register) combined with qualitative close reading.
 >

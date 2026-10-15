@@ -1,6 +1,6 @@
 ---
 name: writer-style-guide
-description: "作家文风系统总入口。自动把“用某作家文风写文章”路由到对应 style-xxx 子 skill；把“创建、优化、批量生成、迭代作家文风skill或总作家skill”路由到 style-analysis-framework 母工厂。用户直接提到作家文风、作者skill、总作家skill或文风迭代时使用。"
+description: "作家文风系统总入口。自动把“用某作家文风写文章”路由到对应 style-xxx 子 skill；把“创建、优化、批量生成、迭代作家文风skill或总作家skill”路由到 style-analysis-framework 母工厂。用户直接提到作家文风、作者skill、总作家skill或文风迭代时使用。 口语触发：「写成鲁迅那样」「像卡夫卡」「新华体」「人民日报体」「用某某的口吻写」。"
 ---
 
 # 作家文风系统总入口
@@ -34,7 +34,7 @@ writer-style-guide
 
 1. 将作者名规范化为 `style-<author>`。
 2. 加载对应子 skill。
-3. 按子 skill 的硬输出契约直接交付成稿。
+3. 按子 skill 的硬输出契约直接交付成稿；各子 skill 共用的成稿优先协议见 [shared/protocol.md](../shared/protocol.md)。
 4. 不加载母工厂的研究与迭代流程，避免挤占写作上下文。
 
 ### 创建作者 Skill
@@ -109,6 +109,11 @@ writer-style-guide
 | 夏目漱石、漱石、Soseki | `style-soseki` |
 | 谷崎润一郎、谷崎、Tanizaki | `style-tanizaki` |
 | 托尔斯泰、Tolstoy | `style-tolstoy` |
+| 新华体、新华社 | `style-xinhua` |
+| 人民日报体、人民锐评 | `style-renmin-ribao` |
+| 南周体、南方周末 | `style-nanfang-zhoumo` |
+| 澎湃体、澎湃新闻 | `style-thepaper` |
+| 小约翰可汗 | `style-xiaoyuehan-kehan` |
 
 媒体和中文内容创作者同样按现有 `style-xxx` 名称路由，但不参与“作者母语原文 + 中文翻译”的默认规则。
 
