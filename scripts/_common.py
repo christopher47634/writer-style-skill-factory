@@ -34,7 +34,9 @@ def load_json(path):
 def parse_frontmatter(text):
     """Parse a flat YAML-ish frontmatter block without third-party deps.
 
-    Returns (dict, error). Supports `key: value`, quoted values, and indented
+    Returns (dict, error). Accepts LF or CRLF and a leading BOM. Supports
+    `key: value`, double-quoted values with escapes (embedded quotes survive),
+    single-quoted values ('' escape), `|` / `>` block scalars, and indented
     continuation lines / nested blocks (kept as raw strings).
     """
     text = text.lstrip("\ufeff")
@@ -43,19 +45,31 @@ def parse_frontmatter(text):
         return None, "missing or unterminated frontmatter"
     data = {}
     key = None
+    folded = False
     for line in m.group(1).splitlines():
         if not line.strip() or line.lstrip().startswith("#"):
             continue
         if line[0] in " \t":
             if key is not None:
-                data[key] = (data[key] + "\n" + line.strip()).strip()
+                sep = " " if folded else "\n"
+                data[key] = (data[key] + sep + line.strip()).strip()
             continue
         km = re.match(r"^([A-Za-z0-9_-]+)\s*:\s*(.*)$", line)
         if not km:
             return None, "unparsable frontmatter line: %r" % line
         key, val = km.group(1), km.group(2).strip()
-        if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'":
-            val = val[1:-1]
+        folded = False
+        if re.fullmatch(r"[|>][+-]?", val):
+            # block scalar: `>` folds continuation lines with spaces, `|` keeps newlines
+            folded = val[0] == ">"
+            val = ""
+        elif len(val) >= 2 and val[0] == val[-1] == '"':
+            try:
+                val = json.loads(val)  # honours \" and other escapes inside the value
+            except ValueError:
+                return None, "bad double-quoted value for %r" % key
+        elif len(val) >= 2 and val[0] == val[-1] == "'":
+            val = val[1:-1].replace("''", "'")
         data[key] = val
     return data, None
 

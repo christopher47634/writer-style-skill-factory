@@ -2,7 +2,9 @@
 """Simple secret / dangerous-command scan over text files in the repo.
 
 Errors (exit 1): credentials (private keys, cloud/API tokens, hard-coded
-password assignments) and dangerous shell patterns (rm -rf /, curl|sh,
+password assignments), sensitive file names (.env, *.pem, *.key, credentials),
+private absolute paths (/home/<user>/, /mnt/c/Users/, C:\\Users\\<user>, X:\\Downloads)
+and dangerous shell patterns (rm -rf /, curl|sh,
 base64-decode-to-shell, chmod 777, fork bomb). Warnings: prompt-injection
 phrases inside SKILL.md. A file may opt out with the marker line
 "security-scan: ignore-file" (used by this script and its tests).
@@ -39,6 +41,11 @@ DANGEROUS = [
     ("fork-bomb", r":\(\)\s*\{\s*:\|:&\s*\};:"),
     ("powershell-iex", r"(?i)\biex\b[^\n]*(downloadstring|invoke-webrequest)"),
 ]
+PRIVACY = [
+    ("private-path",
+     r"(/home/[a-z][a-z0-9_-]*/|/mnt/[a-z]/Users/|\b[A-Za-z]:\\+Users\\+[^\\\s\"'`]+|\b[A-Za-z]:[\\/]+Downloads\b)"),
+]
+SENSITIVE_NAME = re.compile(r"(?i)^(\.env(\..+)?|credentials(\.json)?|id_rsa.*|.*\.(pem|key|p12|pfx))$")
 INJECTION = [
     ("prompt-injection",
      r"(?i)(ignore (all )?(previous|prior) instructions|disregard (the )?system prompt|"
@@ -57,7 +64,8 @@ def compile_all(rules):
 def scan_text(text, relpath="<text>"):
     """Return list of (severity, rule, line, snippet)."""
     out = []
-    groups = [("error", compile_all(SECRETS)), ("error", compile_all(DANGEROUS))]
+    groups = [("error", compile_all(SECRETS)), ("error", compile_all(DANGEROUS)),
+              ("error", compile_all(PRIVACY))]
     if os.path.basename(relpath) == "SKILL.md" or relpath == "<text>":
         groups.append(("warn", compile_all(INJECTION)))
     for sev, rules in groups:
@@ -74,6 +82,10 @@ def scan_tree(root):
     for cur, dirs, files in os.walk(root):
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
         for f in sorted(files):
+            if SENSITIVE_NAME.match(f):
+                rel = os.path.relpath(os.path.join(cur, f), root).replace(os.sep, "/")
+                findings.append(("error", rel, 0, "sensitive-file", f))
+                continue
             if os.path.splitext(f)[1].lower() not in TEXT_EXT:
                 continue
             path = os.path.join(cur, f)

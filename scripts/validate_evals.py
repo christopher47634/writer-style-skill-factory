@@ -3,9 +3,12 @@
 
 Required per case: id (unique int), prompt (str), expected_output (str),
 files (list of str), expectations (non-empty list of non-empty str).
-Extension: optional name (str) and checks[] (deterministic assertions, see
-evalchecks.py). Also verifies that each legacy test-prompts.json entry has a
-migrated case (same prompt) so nothing is lost. Fails if there are no skills.
+Machine-checkable extension (required): tier (smoke|regression|adversarial),
+output_contract (see evalchecks.py), rubric_ref (rubrics/<author>.json, 5-6
+dimensions with 1-5 anchors), pass_threshold {overall, min_dimension}.
+Optional: name (str), input_materials (object), judge_golden
+{human_score 1-5, notes} and extra checks[]. Every skill needs at least one
+smoke case. Fails if there are no skills.
 
 Usage: python scripts/validate_evals.py [ROOT]
 """
@@ -15,10 +18,17 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _common import ROOT, discover_skills, load_json, setup_stdout  # noqa: E402
-from evalchecks import validate_check  # noqa: E402
+from evalchecks import validate_check, validate_contract  # noqa: E402
+from rubrics import load_rubric, rubric_errors  # noqa: E402
+
+TIERS = ("smoke", "regression", "adversarial")
 
 
-def validate_evals_file(path, skill):
+def _num(v, lo, hi):
+    return isinstance(v, (int, float)) and not isinstance(v, bool) and lo <= v <= hi
+
+
+def validate_evals_file(path, skill, root=ROOT):
     errors = []
     try:
         data = load_json(path)
@@ -32,6 +42,7 @@ def validate_evals_file(path, skill):
     if not isinstance(cases, list) or not cases:
         return errors + ["evals must be a non-empty list"]
     seen = set()
+    rubrics_seen = set()
     for i, c in enumerate(cases):
         tag = "case[%d]" % i
         if not isinstance(c, dict):
@@ -58,6 +69,23 @@ def validate_evals_file(path, skill):
         ex = c.get("expectations")
         if not isinstance(ex, list) or not ex or not all(isinstance(x, str) and x.strip() for x in ex):
             errors.append("%s expectations must be a non-empty list of non-empty strings" % tag)
+        if c.get("tier") not in TIERS:
+            errors.append("%s tier must be one of %s" % (tag, "/".join(TIERS)))
+        errors += ["%s %s" % (tag, e) for e in validate_contract(c.get("output_contract"))]
+        ref = c.get("rubric_ref")
+        if not isinstance(ref, str) or not ref:
+            errors.append("%s rubric_ref must be a path like rubrics/<author>.json" % tag)
+        else:
+            rubrics_seen.add(ref)
+        pt = c.get("pass_threshold")
+        if not isinstance(pt, dict) or not _num(pt.get("overall"), 1, 5) or not _num(pt.get("min_dimension"), 1, 5):
+            errors.append("%s pass_threshold needs overall and min_dimension in 1-5" % tag)
+        jg = c.get("judge_golden")
+        if jg is not None and (not isinstance(jg, dict) or not isinstance(jg.get("human_score"), int)
+                               or isinstance(jg.get("human_score"), bool) or not 1 <= jg["human_score"] <= 5):
+            errors.append("%s judge_golden.human_score must be an integer 1-5" % tag)
+        if "input_materials" in c and not isinstance(c["input_materials"], dict):
+            errors.append("%s input_materials must be an object" % tag)
         if "checks" in c:
             if not isinstance(c["checks"], list):
                 errors.append("%s checks must be a list" % tag)
@@ -66,16 +94,14 @@ def validate_evals_file(path, skill):
                     e = validate_check(ch)
                     if e:
                         errors.append("%s checks[%d]: %s" % (tag, j, e))
+    if not any(isinstance(c, dict) and c.get("tier") == "smoke" for c in cases):
+        errors.append("at least one case must have tier=smoke")
+    for ref in sorted(rubrics_seen):
+        rub, errs = load_rubric(ref, root)
+        errors += errs
+        if rub is not None:
+            errors += rubric_errors(rub, ref)
     return errors
-
-
-def legacy_errors(skill_dir, cases):
-    legacy = os.path.join(skill_dir, "test-prompts.json")
-    if not os.path.isfile(legacy):
-        return []
-    prompts = {c.get("prompt") for c in cases if isinstance(c, dict)}
-    return ["legacy test-prompts.json prompt not migrated: %r" % p["prompt"]
-            for p in load_json(legacy) if p["prompt"] not in prompts]
 
 
 def run(root):
@@ -91,11 +117,9 @@ def run(root):
             print("[FAIL] %s: evals/evals.json missing" % s)
             bad += 1
             continue
-        errs = validate_evals_file(path, s)
+        errs = validate_evals_file(path, s, root)
         if not errs:
-            data = load_json(path)
-            total += len(data["evals"])
-            errs = legacy_errors(os.path.join(root, s), data["evals"])
+            total += len(load_json(path)["evals"])
         if errs:
             bad += 1
             for e in errs:
