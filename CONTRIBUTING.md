@@ -62,20 +62,15 @@ queries in `evals/routing.json`, and an entry in `registry.json`
 
 ## Adding a new author skill
 
-1. Create the skill directory using a kebab-case slug:
+1. Scaffold the skill directory, rubric, and 3-tier `evals.json` (pass `--bilingual` for non-Chinese authors, `--contemporary` for living/copyrighted voices, and `--register` to update `registry.json` + `evals/routing.json`):
 
    ```sh
-   mkdir style-<author>        # e.g. style-hemingway
+   python3 scripts/new_skill.py --slug hemingway --author 海明威 --lang en --bilingual --register
    ```
 
-2. Write `style-<author>/SKILL.md` containing the required sections listed above.
-   Model it on an existing skill (e.g. `style-kafka/` or `style-luxun/`) so
-   formatting stays consistent.
+2. Fill in the corpus analysis, craft mechanisms, anti-patterns, and original pastiche examples in `style-<author>/SKILL.md`, and refine `rubrics/<author>.json` and `style-<author>/evals/evals.json`.
 
-3. Create `style-<author>/evals/evals.json` (schema in `docs/EVALS.md`: `tier`,
-   `output_contract`, `rubric_ref`, `pass_threshold`) and `rubrics/<author>.json`.
-
-4. Validate:
+3. Validate:
 
    ```sh
    python3 validate.py --static --strict
@@ -83,7 +78,7 @@ queries in `evals/routing.json`, and an entry in `registry.json`
 
    Ensure the exit code is `0`.
 
-5. Keep the change scoped to the new skill directory unless a shared file
+4. Keep the change scoped to the new skill directory unless a shared file
    (`style-analysis-framework/`, `writer-style-guide/`) genuinely needs updating.
 
 ## Pull request flow

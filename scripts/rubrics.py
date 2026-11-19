@@ -51,7 +51,18 @@ def load_rubric(ref, root=ROOT, _seen=None):
         new = {**old, **d}
         new["anchors"] = {**old.get("anchors", {}), **d.get("anchors", {})}
         dims[d["id"]] = new
-    merged.update({k: v for k, v in data.items() if k not in ("dimensions", "extends")})
+    list_merge_keys = ("forbidden_strings", "forbidden_regex", "anti_patterns")
+    for k, v in data.items():
+        if k in ("dimensions", "extends"):
+            continue
+        if k in list_merge_keys and isinstance(merged.get(k), list) and isinstance(v, list):
+            seen_items = []
+            for item in merged[k] + v:
+                if item not in seen_items:
+                    seen_items.append(item)
+            merged[k] = seen_items
+        else:
+            merged[k] = v
     merged["dimensions"] = [dims[i] for i in order]
     return merged, errors
 

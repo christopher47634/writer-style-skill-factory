@@ -41,12 +41,14 @@ import shlex
 import statistics
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from _common import discover_skills, load_json, read_text, setup_stdout  # noqa: E402
+from check_prose import scan_text as scan_prose  # noqa: E402
 from evalchecks import case_checks, run_checks  # noqa: E402
 from rubrics import load_rubric  # noqa: E402
 
@@ -62,7 +64,12 @@ PRICES = {
     "claude-sonnet-5": (2.0, 10.0),
     "claude-haiku-5-5": (0.10, 0.50),
     "claude-fable-5-1": (10.0, 50.0),
+    "deepseek-chat": (0.27, 1.10),
+    "deepseek-reasoner": (0.55, 2.19),
+    "gpt-4o": (2.50, 10.0),
+    "gpt-4o-mini": (0.15, 0.60),
 }
+RETRYABLE_HTTP_CODES = {408, 409, 429, 500, 502, 503, 504}
 UNKNOWN_PRICE = (10.0, 50.0)  # conservative default when the model is not in the table
 # Models that reject temperature/top_p/top_k (send nothing, record "model-default").
 NO_SAMPLING = re.compile(r"^claude-(opus-(4-[78]|5)|sonnet-5|haiku-5|fable|mythos)")
@@ -105,16 +112,29 @@ def est_tokens(text):
 class Backend:
     """A model endpoint. call() returns (text, input_tokens, output_tokens)."""
 
-    def __init__(self, spec, price=None, temperature=None):
+    def __init__(self, spec, price=None, temperature=None, role=None, max_retries=2):
         if ":" not in spec:
             raise ConfigError("backend spec must look like anthropic:<model>, openai:<model> or cmd:<command>")
         self.kind, self.model = spec.split(":", 1)
         if self.kind not in ("anthropic", "openai", "cmd"):
             raise ConfigError("unknown backend %r" % self.kind)
         self.spec = spec
+        self.role = role  # "generator", "judge", or None
+        self.max_retries = max(0, int(max_retries))
         self.price = price or PRICES.get(self.model, UNKNOWN_PRICE if self.kind != "cmd" else (0.0, 0.0))
         self.temperature = temperature
         self._client = None
+
+    def _openai_env(self):
+        """Resolve role-specific OpenAI-compatible credentials (falls back to OPENAI_*)."""
+        prefix = "EVAL_%s_" % self.role.upper() if self.role in ("generator", "judge") else None
+        key = (os.environ.get(prefix + "API_KEY") if prefix else None) or os.environ.get("OPENAI_API_KEY")
+        base = (
+            (os.environ.get(prefix + "BASE_URL") if prefix else None)
+            or os.environ.get("OPENAI_BASE_URL")
+            or "https://api.openai.com/v1"
+        ).rstrip("/")
+        return key, base
 
     @property
     def effective_temperature(self):
@@ -137,8 +157,10 @@ class Backend:
             except ImportError:
                 raise ConfigError("anthropic backend needs `pip install anthropic`")
         elif self.kind == "openai":
-            if not os.environ.get("OPENAI_API_KEY"):
-                raise ConfigError("openai backend needs OPENAI_API_KEY in the environment")
+            key, _ = self._openai_env()
+            if not key:
+                hint = "EVAL_%s_API_KEY or OPENAI_API_KEY" % self.role.upper() if self.role else "OPENAI_API_KEY"
+                raise ConfigError("openai backend needs %s in the environment" % hint)
         else:
             if not shlex.split(self.model):
                 raise ConfigError("cmd backend needs a command")
@@ -173,21 +195,45 @@ class Backend:
         return text, msg.usage.input_tokens, msg.usage.output_tokens
 
     def _openai(self, system, user, max_tokens):
-        base = os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/")
+        api_key, base = self._openai_env()
+        if not api_key:
+            raise ConfigError("openai backend missing API key")
         msgs = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
         body = {"model": self.model, "messages": msgs, "max_tokens": max_tokens}
         if self.temperature is not None:
             body["temperature"] = self.temperature
-        req = urllib.request.Request(base + "/chat/completions", data=json.dumps(body).encode("utf-8"),
-                                     headers={"Content-Type": "application/json",
-                                              "Authorization": "Bearer " + os.environ["OPENAI_API_KEY"]})
-        try:
-            with urllib.request.urlopen(req, timeout=600) as r:
-                data = json.loads(r.read().decode("utf-8"))
-        except urllib.error.HTTPError as e:
-            if e.code in (401, 403, 404):
-                raise ConfigError("openai backend error %d: %s" % (e.code, e.read()[:300]))
-            raise
+        payload = json.dumps(body).encode("utf-8")
+        headers = {"Content-Type": "application/json", "Authorization": "Bearer " + api_key}
+
+        last_err = None
+        for attempt in range(self.max_retries + 1):
+            req = urllib.request.Request(base + "/chat/completions", data=payload, headers=headers)
+            try:
+                with urllib.request.urlopen(req, timeout=600) as r:
+                    data = json.loads(r.read().decode("utf-8"))
+                break
+            except urllib.error.HTTPError as e:
+                if e.code in (401, 403, 404):
+                    raise ConfigError("openai backend error %d: %s" % (e.code, e.read()[:300]))
+                last_err = e
+                if e.code in RETRYABLE_HTTP_CODES and attempt < self.max_retries:
+                    retry_after = e.headers.get("Retry-After") if e.headers else None
+                    try:
+                        delay = min(float(retry_after), 30.0) if retry_after else float(2 ** attempt)
+                    except ValueError:
+                        delay = float(2 ** attempt)
+                    time.sleep(delay)
+                    continue
+                raise
+            except (urllib.error.URLError, TimeoutError) as e:
+                last_err = e
+                if attempt < self.max_retries:
+                    time.sleep(float(2 ** attempt))
+                    continue
+                raise
+        else:
+            raise last_err
+
         usage = data.get("usage") or {}
         text = data["choices"][0]["message"].get("content") or ""
         return text, usage.get("prompt_tokens", est_tokens(system + user)), usage.get("completion_tokens", est_tokens(text))
@@ -250,38 +296,72 @@ def judge_prompt(case, reply, rubric):
            len(rubric["dimensions"]), len(case.get("expectations", []))))
 
 
-def parse_judge(text, rubric, n_expect):
-    """Return (result, error). Validates against JUDGE_SCHEMA by hand (stdlib only)."""
-    m = re.search(r"\{.*\}", text, re.S)
-    if not m:
-        return None, "no JSON object"
-    try:
-        data = json.loads(m.group(0))
-    except ValueError as e:
-        return None, "invalid JSON: %s" % e
+def _iter_json_objects(text):
+    """Yield decoded dict candidates from fenced ```json blocks first, then balanced `{...}` spans."""
+    decoder = json.JSONDecoder()
+    seen = set()
+
+    def scan(chunk):
+        idx = 0
+        while True:
+            pos = chunk.find("{", idx)
+            if pos < 0:
+                break
+            try:
+                obj, end = decoder.raw_decode(chunk, pos)
+            except ValueError:
+                idx = pos + 1
+                continue
+            if isinstance(obj, dict):
+                key = json.dumps(obj, sort_keys=True, ensure_ascii=False)
+                if key not in seen:
+                    seen.add(key)
+                    yield obj
+            idx = max(end, pos + 1)
+
+    for m in re.finditer(r"```(?:json)?\s*\n(.*?)```", text, re.S | re.I):
+        yield from scan(m.group(1))
+    yield from scan(text)
+
+
+def _validate_judge_object(data, rubric, n_expect):
     if not isinstance(data, dict):
-        return None, "not an object"
+        return "not an object"
     for k in JUDGE_SCHEMA["required"]:
         if k not in data:
-            return None, "missing %s" % k
+            return "missing %s" % k
     scores = data["scores"]
     if not isinstance(scores, dict):
-        return None, "scores must be an object"
+        return "scores must be an object"
     for d in rubric["dimensions"]:
         s = scores.get(d["id"])
         if not isinstance(s, dict) or not isinstance(s.get("score"), int) or isinstance(s.get("score"), bool) \
                 or not 1 <= s["score"] <= 5 or not isinstance(s.get("evidence"), str):
-            return None, "bad score for %s" % d["id"]
+            return "bad score for %s" % d["id"]
     if not isinstance(data["violations"], list) or not all(
             isinstance(v, dict) and isinstance(v.get("rule_id"), str) and isinstance(v.get("quote"), str)
             for v in data["violations"]):
-        return None, "bad violations"
+        return "bad violations"
     if data["verdict"] not in ("pass", "fail"):
-        return None, "bad verdict"
+        return "bad verdict"
     ex = data["expectations"]
     if not isinstance(ex, list) or len(ex) != n_expect or not all(isinstance(x, bool) for x in ex):
-        return None, "expectations must be %d booleans" % n_expect
-    return data, None
+        return "expectations must be %d booleans" % n_expect
+    return None
+
+
+def parse_judge(text, rubric, n_expect):
+    """Return (result, error). Validates against JUDGE_SCHEMA by hand (stdlib only)."""
+    candidates = list(_iter_json_objects(text))
+    if not candidates:
+        return None, "no JSON object"
+    last_err = "no JSON object"
+    for data in candidates:
+        err = _validate_judge_object(data, rubric, n_expect)
+        if err is None:
+            return data, None
+        last_err = err
+    return None, last_err
 
 
 # ---------------------------------------------------------------- core ------
@@ -314,7 +394,14 @@ def evaluate_case(case, rubric, system, gen, judge, meter, runs, out_dir, tag):
             with open(os.path.join(out_dir, "%s-%s-run%d.md" % (case["id"], tag, i + 1)), "w", encoding="utf-8") as f:
                 f.write(reply)
         failed = [c for c, ok in run_checks(checks, reply) if not ok]
-        run = {"checks_failed": failed, "scores": None, "judge_error": None, "expectations": None}
+        prose_hits = scan_prose(reply)
+        run = {
+            "checks_failed": failed,
+            "prose_warnings": prose_hits,
+            "scores": None,
+            "judge_error": None,
+            "expectations": None,
+        }
         if failed:
             run["scores"] = {d: 1 for d in dims}
         elif judge is not None:
@@ -334,8 +421,15 @@ def evaluate_case(case, rubric, system, gen, judge, meter, runs, out_dir, tag):
         per_run.append(run)
 
     checks_passed = sum(1 for r in per_run if not r["checks_failed"])
+    prose_warnings_total = sum(len(r.get("prose_warnings") or []) for r in per_run)
     scored = [r["scores"] for r in per_run if r["scores"]]
-    result = {"runs": per_run, "checks_passed": checks_passed, "runs_total": runs, "cost_usd": cost}
+    result = {
+        "runs": per_run,
+        "checks_passed": checks_passed,
+        "runs_total": runs,
+        "prose_warnings_total": prose_warnings_total,
+        "cost_usd": cost,
+    }
     if judge is None:
         result["verdict"] = "pass" if checks_passed * 2 > runs else "fail"
         return result
@@ -379,6 +473,57 @@ def select_cases(root, skills, tiers, limit):
     return plan
 
 
+def summarize_baseline(report):
+    """Compare paired with_skill vs without_skill entries in report['skills']."""
+    pairs = []
+    wins = ties = losses = 0
+    deltas = []
+    for skill, entries in sorted(report.get("skills", {}).items()):
+        by_case = {}
+        for item in entries:
+            by_case.setdefault(item["id"], {})[item["variant"]] = item
+        for cid, group in by_case.items():
+            w, b = group.get("with_skill"), group.get("without_skill")
+            if not w or not b:
+                continue
+            w_ov, b_ov = w.get("overall"), b.get("overall")
+            delta_ov = round(w_ov - b_ov, 2) if isinstance(w_ov, (int, float)) and isinstance(b_ov, (int, float)) else None
+            w_min, b_min = w.get("min_dimension"), b.get("min_dimension")
+            delta_min = round(w_min - b_min, 2) if isinstance(w_min, (int, float)) and isinstance(b_min, (int, float)) else None
+            checks_delta = w.get("checks_passed", 0) - b.get("checks_passed", 0)
+            if delta_ov is not None:
+                deltas.append(delta_ov)
+                outcome = "win" if delta_ov > 0 else ("loss" if delta_ov < 0 else "tie")
+            else:
+                outcome = "win" if checks_delta > 0 else ("loss" if checks_delta < 0 else "tie")
+            if outcome == "win":
+                wins += 1
+            elif outcome == "loss":
+                losses += 1
+            else:
+                ties += 1
+            pairs.append({
+                "skill": skill,
+                "case": cid,
+                "with_overall": w_ov,
+                "without_overall": b_ov,
+                "delta_overall": delta_ov,
+                "delta_min_dimension": delta_min,
+                "checks_delta": checks_delta,
+                "outcome": outcome,
+            })
+    if not pairs:
+        return None
+    return {
+        "cases": len(pairs),
+        "wins": wins,
+        "ties": ties,
+        "losses": losses,
+        "avg_delta_overall": round(sum(deltas) / len(deltas), 2) if deltas else None,
+        "pairs": pairs,
+    }
+
+
 def parse_price(s):
     if not s:
         return None
@@ -417,8 +562,10 @@ def main(argv=None):
         if not skills:
             raise ConfigError("choose --skill NAME or --all")
         plan = select_cases(args.root, skills, set(args.tier), args.limit)
-        gen = Backend(args.generator, parse_price(args.generator_price))
-        judge = None if args.no_judge else Backend(args.judge, parse_price(args.judge_price), args.judge_temperature)
+        gen = Backend(args.generator, parse_price(args.generator_price), role="generator")
+        judge = None if args.no_judge else Backend(
+            args.judge, parse_price(args.judge_price), args.judge_temperature, role="judge"
+        )
     except ConfigError as e:
         print("config error: %s" % e, file=sys.stderr)
         return 2
@@ -436,15 +583,17 @@ def main(argv=None):
                     print("config error: %s" % "; ".join(errs), file=sys.stderr)
                     return 2
                 nchk = len(case_checks(c, rub))
+                case_est = 0.0
                 for _v, use in variants:
                     sysx = system if use else ""
                     est = args.runs * gen.max_cost(sysx + user_message(c), GEN_MAX_TOKENS)
                     if judge:
                         est += args.runs * judge.max_cost(judge_prompt(c, "x" * 3000, rub), JUDGE_MAX_TOKENS)
+                    case_est += est
                     total += est
                     n += 1
                 print("%-24s #%-2s %-11s %-16s checks=%-2d max≈$%.3f  %s" % (
-                    s, c["id"], c.get("tier"), c.get("name", ""), nchk, est, c["prompt"][:40]))
+                    s, c["id"], c.get("tier"), c.get("name", ""), nchk, case_est, c["prompt"][:40]))
         budget = "" if args.budget_usd is None else "，预算 $%.2f%s" % (
             args.budget_usd, "（不足，实际运行会在中途停止）" if total > args.budget_usd else "")
         print("\n%d 次评测，最坏情况费用约 $%.2f%s。dry-run：未调用模型，未写文件。" % (n, total, budget))
@@ -480,23 +629,33 @@ def main(argv=None):
                                  "runs": args.runs, "checks_passed": "%d/%d" % (res["checks_passed"], args.runs),
                                  "overall": res.get("overall", ""), "min_dimension": res.get("min_dimension", ""),
                                  "verdict": res["verdict"], "cost_usd": "%.4f" % res["cost_usd"], "eval_mode": "live"})
-                    print("%s #%s %s: %s overall=%s checks=%d/%d $%.4f" % (
+                    print("%s #%s %s: %s overall=%s checks=%d/%d prose_warn=%d $%.4f" % (
                         s, c["id"], vname, res["verdict"], res.get("overall", "-"),
-                        res["checks_passed"], args.runs, res["cost_usd"]))
+                        res["checks_passed"], args.runs, res.get("prose_warnings_total", 0), res["cost_usd"]))
     except BudgetExceeded as e:
         print("stopped: %s" % e)
         code = 3
     except ConfigError as e:
         print("config error: %s" % e, file=sys.stderr)
         code = 2
-
-    os.makedirs(args.out, exist_ok=True)
-    report["spent_usd"] = round(meter.spent, 4)
-    with open(os.path.join(args.out, "report.json"), "w", encoding="utf-8") as f:
-        json.dump(report, f, ensure_ascii=False, indent=2)
-    if rows and not args.no_results:
-        append_results(args.results or os.path.join(args.root, "results.tsv"), rows)
-    print("\nspent $%.4f; report: %s" % (meter.spent, os.path.join(args.out, "report.json")))
+    except Exception as e:
+        print("runtime error (saving partial results): %s" % e, file=sys.stderr)
+        report["aborted_error"] = str(e)
+        code = 2
+    finally:
+        baseline_summary = summarize_baseline(report)
+        if baseline_summary is not None:
+            report["baseline_comparison"] = baseline_summary
+            avg_str = "-" if baseline_summary["avg_delta_overall"] is None else "%+.2f" % baseline_summary["avg_delta_overall"]
+            print("\nbaseline lift: %d win / %d tie / %d loss (avg Δoverall=%s)" % (
+                baseline_summary["wins"], baseline_summary["ties"], baseline_summary["losses"], avg_str))
+        os.makedirs(args.out, exist_ok=True)
+        report["spent_usd"] = round(meter.spent, 4)
+        with open(os.path.join(args.out, "report.json"), "w", encoding="utf-8") as f:
+            json.dump(report, f, ensure_ascii=False, indent=2)
+        if rows and not args.no_results:
+            append_results(args.results or os.path.join(args.root, "results.tsv"), rows)
+        print("\nspent $%.4f; report: %s" % (meter.spent, os.path.join(args.out, "report.json")))
     return code
 
 

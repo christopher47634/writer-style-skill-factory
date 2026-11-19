@@ -65,10 +65,20 @@ python scripts/check_prose.py evals-workspace/latest                   # lint th
 - Backends: `--generator` / `--judge` (or `EVAL_GENERATOR` / `EVAL_JUDGE`) take
   `anthropic:<model>`, `openai:<model>` (any OpenAI-compatible endpoint) or
   `cmd:<command>` (reads the prompt on stdin, e.g. `cmd:claude -p`).
+- Role-specific credentials: when both generator and judge use `openai:<model>`
+  from different providers (e.g. DeepSeek generator + GPT/Qwen judge), set
+  `EVAL_GENERATOR_API_KEY` / `EVAL_GENERATOR_BASE_URL` and
+  `EVAL_JUDGE_API_KEY` / `EVAL_JUDGE_BASE_URL` (falls back to `OPENAI_API_KEY` /
+  `OPENAI_BASE_URL`). Transient 429/5xx errors retry with exponential backoff,
+  and partial results are still flushed on abort.
 - The judge should be a different model family from the generator. It sees only
   the task, the draft and the rubric, not SKILL.md, and must answer in the
   `JUDGE_SCHEMA` JSON (score + quoted evidence per dimension, violations, verdict).
 - Each case runs `--runs` times (default 3); dimension scores are medians.
+  Drafts are also scanned by `scripts/check_prose.py` (`prose_warnings` in `report.json`),
+  and `--baseline` automatically computes `baseline_comparison` (win/tie/loss and Δoverall).
+- Summarize any run into Markdown with `python scripts/summarize_results.py --report evals-workspace/latest/report.json`
+  (or `--results results.tsv [--compare OLD NEW]`).
 - `--budget-usd` stops the run early (exit code 3) once the estimated spend is reached.
 - Live results are appended to `results.tsv` with `eval_mode=live`; `validate.py`
   rejects any other mode, so hand-estimated scores cannot pass as benchmark data.
